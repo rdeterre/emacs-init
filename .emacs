@@ -65,7 +65,7 @@
 	 pallet
 	 powerline
 	 projectile
-	 revive
+;;	 revive
 	 solarized-theme
 	 smartparens
 	 yasnippet
@@ -643,14 +643,14 @@
 ;; Follow compilation buffer until first error happens
 (setq compilation-scroll-output 'first-error)
 
-;; Revive
-(require 'revive)
-(autoload 'save-current-configuration "revive" "Save status" t)
-(autoload 'resume "revive" "Resume Emacs" t)
-(autoload 'wipe "revive" "Wipe Emacs" t)
-(define-key ctl-x-map "S" 'save-current-configuration)
-(define-key ctl-x-map "F" 'resume)
-(define-key ctl-x-map "K" 'wipe)
+;; ;; Revive
+;; (require 'revive)
+;; (autoload 'save-current-configuration "revive" "Save status" t)
+;; (autoload 'resume "revive" "Resume Emacs" t)
+;; (autoload 'wipe "revive" "Wipe Emacs" t)
+;; (define-key ctl-x-map "S" 'save-current-configuration)
+;; (define-key ctl-x-map "F" 'resume)
+;; (define-key ctl-x-map "K" 'wipe)
 
 (autoload 'expand-member-functions
   "member-functions" "Expand C++ member function declarations" t)
