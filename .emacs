@@ -46,15 +46,16 @@
 	 auto-complete
 	 autopair
 	 c-eldoc
-;;	 cmake-project			
+;;	 cmake-project
 	 column-marker
 	 disaster
 ;;	 doctags
-;;	 ecb				
+;;	 ecb
 	 ein
 	 fill-column-indicator
 	 flymake
 	 helm
+         helm-dash
 	 hideshow-org
 	 ido-ubiquitous
 	 jedi
@@ -130,7 +131,7 @@
 (require 'disaster)
 (add-hook 'c-mode-common-hook
 	  (lambda ()
-	    (define-key c-mode-base-map (kbd "C-c d") 'disaster)))
+	    (define-key c-mode-base-map (kbd "C-c a") 'disaster)))
 
 
 ;; org-mode
@@ -416,7 +417,7 @@
 
 
 ;; TODO : Invesigate.
-;;(require 'doctags)			
+;;(require 'doctags)
 
 (set 'shift-selection-mode nil)
 
@@ -639,6 +640,30 @@
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-c i") 'helm-imenu)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
+
+;; Helm-dash
+(require 'helm-dash)
+(global-set-key (kbd "C-c d") 'helm-dash)
+(setq helm-dash-common-docsets '("C"
+                                 "C++"
+                                 "Common Lisp"
+                                 "Emacs Lisp"))
+
+(defun rdeterre/dash-install (docset)
+  ; Taken from http://jwintz.me/blog/2014/02/16/helm-dash-makes-you-efficient/
+  (unless (file-exists-p
+           ;; (concat
+           ;;  (concat helm-dash-docsets-path "/")
+           ;;  (concat (nth 0 (split-string docset "_"))
+           ;;          ".docset")))
+           (concat docset ".docset"))
+    (helm-dash-install-docset
+     (replace-regexp-in-string " " "_" docset))))
+
+(defun rdeterre/dash-install-all-common-docsets ()
+  (mapcar 'rdeterre/dash-install helm-dash-common-docsets))
+
+(rdeterre/dash-install-all-common-docsets)
 
 ;; Follow compilation buffer until first error happens
 (setq compilation-scroll-output 'first-error)
