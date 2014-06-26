@@ -6,6 +6,11 @@
 ;; (require 'cask "~/.cask/cask.el")
 ;; (cask-initialize)
 
+;; Path
+
+(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
+(setq exec-path (append exec-path '("/usr/local/bin")))
+
 ;; Based on http://melpa.milkbox.net/#/getting-started .
 
 (require 'package)
@@ -91,7 +96,9 @@
 (server-start)
 
 ;; Font
-(set-frame-font "Source Code Pro-9" nil t)
+(if (equal system-type 'darwin)
+    (set-frame-font "Source Code Pro-12" nil t)
+  (set-frame-font "Source Code Pro-9" nil t))
 
 ;; Scrolling
 (setq mouse-wheel-progressive-speed nil)
@@ -643,7 +650,6 @@
 
 ;; Helm-dash
 (require 'helm-dash)
-(global-set-key (kbd "C-c d") 'helm-dash)
 (setq helm-dash-common-docsets '("C"
                                  "C++"
                                  "Common Lisp"
@@ -651,12 +657,13 @@
 
 (defun rdeterre/dash-install (docset)
   ; Taken from http://jwintz.me/blog/2014/02/16/helm-dash-makes-you-efficient/
+  (message (file-exists-p (concat docset ".docset")))
   (unless (file-exists-p
-           ;; (concat
-           ;;  (concat helm-dash-docsets-path "/")
+           (concat
+            (concat helm-dash-docsets-path "/")
            ;;  (concat (nth 0 (split-string docset "_"))
            ;;          ".docset")))
-           (concat docset ".docset"))
+            (concat docset ".docset")))
     (helm-dash-install-docset
      (replace-regexp-in-string " " "_" docset))))
 
