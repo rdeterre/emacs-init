@@ -110,9 +110,13 @@
 (server-start)
 
 ;; Font
-(if (equal system-type 'darwin)
-    (set-frame-font "Source Code Pro-12" nil t)
-  (set-frame-font "Source Code Pro-9" nil t))
+;; (if (equal system-type 'darwin)
+;;     (set-frame-font "Source Code Pro-12" nil t)
+;;   (set-frame-font "Source Code Pro-9" nil t))
+(if (system-is-mac)
+    (set-face-attribute 'default nil :height 120)
+  (set-face-attribute 'default nil :height 100))
+
 
 ;; Scrolling
 (setq mouse-wheel-progressive-speed nil)
