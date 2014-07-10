@@ -6,10 +6,24 @@
 ;; (require 'cask "~/.cask/cask.el")
 ;; (cask-initialize)
 
+(defun system-is-mac ()
+  (interactive)
+  (string-equal system-type "darwin"))
+
+(defun system-is-linux ()
+  (interactive)
+  (string-equal system-type "gnu/linux"))
+
 ;; Path
 
-(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
-(setq exec-path (append exec-path '("/usr/local/bin")))
+;; (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
+;; (setq exec-path (append exec-path '("/usr/local/bin")))
+(if (system-is-mac)
+    (setenv "PATH"
+            (concat "/usr/local/bin:" (getenv "PATH"))))
+
+(if (system-is-mac)
+    (setenv "PYTHONPATH" "/usr/local/lib/python2.7/site-packages:"))
 
 ;; Based on http://melpa.milkbox.net/#/getting-started .
 
@@ -497,7 +511,9 @@
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(gac-automatically-push-p t)
  '(minimap-recenter-type (quote free))
- '(python-shell-interpreter "python3")
+ '(python-shell-interpreter (if (system-is-mac)
+                                '"/usr/local/bin/python"
+                              '"python"))
  '(safe-local-variable-values (quote ((c-basic-indent . 2) (c-basic-indent . 4) (c-basic-indent 4) (c-basic-offset 4)))))
 
 ;; Trucate lines
