@@ -691,6 +691,7 @@
   (mapcar 'rdeterre/dash-install helm-dash-common-docsets))
 
 (rdeterre/dash-install-all-common-docsets)
+(global-set-key (kbd "C-c d") 'helm-dash)
 
 ;; Follow compilation buffer until first error happens
 (setq compilation-scroll-output 'first-error)
