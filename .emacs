@@ -103,8 +103,8 @@
 
 (global-auto-revert-mode t)
 
-(load-theme 'heroku t)
-;; (load-theme 'zenburn t)
+;; (load-theme 'heroku t)
+(load-theme 'zenburn t)
 ;; (load-theme 'solarized-light t)
 
 (server-start)
@@ -115,7 +115,9 @@
 ;;   (set-frame-font "Source Code Pro-9" nil t))
 (if (system-is-mac)
     (set-face-attribute 'default nil :height 120)
-  (set-face-attribute 'default nil :height 90))
+  (if (member "Source Code Pro" (font-family-list))
+      (set-frame-font "Source Code Pro-9" nil t)
+    (set-face-attribute 'default nil :height 100)))
 
 
 ;; Scrolling
@@ -510,14 +512,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-safe-themes (quote ("96efbabfb6516f7375cdf85e7781fe7b7249b6e8114676d65337a1ffe78b78d9" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
+ '(custom-safe-themes (quote ("146d24de1bb61ddfa64062c29b5ff57065552a7c4019bee5d869e938782dfc2a" "96efbabfb6516f7375cdf85e7781fe7b7249b6e8114676d65337a1ffe78b78d9" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(gac-automatically-push-p t)
  '(minimap-recenter-type (quote free))
- '(python-shell-interpreter (if (system-is-mac)
-                                '"/usr/local/bin/python"
-                              '"python"))
+ '(python-shell-interpreter (if (system-is-mac) (quote "/usr/local/bin/python") (quote "python")))
  '(safe-local-variable-values (quote ((c-basic-indent . 2) (c-basic-indent . 4) (c-basic-indent 4) (c-basic-offset 4)))))
 
 ;; Trucate lines
