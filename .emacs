@@ -396,7 +396,7 @@
                 )
 
 ;; Rebox2
-(setq rebox-style-loop '(13 111))
+(setq rebox-style-loop '(13 33 111))
 (setq rebox-min-fill-column '80)
 (require 'rebox2)
 (global-set-key (kbd "C-;") 'rebox-cycle)
