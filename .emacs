@@ -407,9 +407,10 @@
 (add-to-list 'load-path "~/.emacs.d/rtags/src")
 (add-to-list 'load-path "~/.emacs.d/rtags/bin")
 (if (file-exists-p "~/rtags")
-    (require 'rtags))
-(if (file-exists-p "~/rtags")
-    (rtags-enable-standard-keybindings c-mode-base-map))
+    (progn
+      (require 'rtags)
+      (rtags-enable-standard-keybindings c-mode-base-map)
+      (rtags-start-process-maybe)))
 
 ;; (require 'hideshow-org)
 ;; (global-set-key "\C-ch" 'hs-org/minor-mode)
