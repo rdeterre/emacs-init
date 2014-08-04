@@ -3,8 +3,7 @@
 ;; Author : Romain Deterre <romain@alazartech.com>
 ;;
 
-;; (require 'cask "~/.cask/cask.el")
-;; (cask-initialize)
+;; Utility functions
 
 (defun system-is-mac ()
   (interactive)
@@ -14,16 +13,12 @@
   (interactive)
   (string-equal system-type "gnu/linux"))
 
-;; Path
-
-;; (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
-;; (setq exec-path (append exec-path '("/usr/local/bin")))
-(if (system-is-mac)
-    (setenv "PATH"
-            (concat "/usr/local/bin:" (getenv "PATH"))))
+;; Path issues on OS X
 
 (if (system-is-mac)
-    (setenv "PYTHONPATH" "/usr/local/lib/python2.7/site-packages:"))
+    (progn
+      (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
+      (setenv "PYTHONPATH" "/usr/local/lib/python2.7/site-packages:")))
 
 ;; Based on http://melpa.milkbox.net/#/getting-started .
 
@@ -795,3 +790,7 @@
 
 ;; Arduino files
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c-mode))
+
+;; Keyboard for OS X
+(if system-is-mac
+    (setq mac-control-modifier 'meta))
