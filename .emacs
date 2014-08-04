@@ -792,5 +792,5 @@
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c-mode))
 
 ;; Keyboard for OS X
-(if system-is-mac
-    (setq mac-control-modifier 'meta))
+(if (system-is-mac)
+    (setq mac-command-modifier 'meta))
