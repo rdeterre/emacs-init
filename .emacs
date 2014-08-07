@@ -99,7 +99,7 @@
 (global-auto-revert-mode t)
 
 ;; (load-theme 'heroku t)
-(load-theme 'zenburn t)
+;; (load-theme 'zenburn t)
 ;; (load-theme 'solarized-light t)
 
 (server-start)
@@ -168,7 +168,8 @@
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((dot . t))) ; this line activates dot
+ '((dot . t)
+   (calc . t))) ; this line activates dot
 
 ;; Set Fill Column
 (setq fill-column 80)
@@ -669,7 +670,9 @@
 (setq helm-dash-common-docsets '("C"
                                  "C++"
                                  "Common Lisp"
-                                 "Emacs Lisp"))
+                                 "Emacs Lisp"
+                                 "NumPy"
+                                 "Python_2"))
 
 (defun rdeterre/dash-install (docset)
   ; Taken from http://jwintz.me/blog/2014/02/16/helm-dash-makes-you-efficient/
@@ -688,6 +691,8 @@
 
 (rdeterre/dash-install-all-common-docsets)
 (global-set-key (kbd "C-c d") 'helm-dash)
+(add-hook 'python-mode-hook
+          (lambda () (local-set-key (kbd "C-c c") 'helm-dash)))
 
 ;; Follow compilation buffer until first error happens
 (setq compilation-scroll-output 'first-error)
