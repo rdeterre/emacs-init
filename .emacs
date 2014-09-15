@@ -809,3 +809,7 @@
 ;; Keyboard for OS X
 (if (system-is-mac)
     (setq mac-command-modifier 'meta))
+
+;; Uniquify
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
