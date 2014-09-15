@@ -171,6 +171,16 @@
  '((dot . t)
    (calc . t))) ; this line activates dot
 
+(setq org-default-notes-file (concat "~/aztdc1/notes/notes.org"))
+(define-key global-map "\C-cc" 'org-capture)
+
+(setq org-capture-templates
+ '(("c" "Phone call" entry
+    (file+headline "~/aztdc1/notes/notes.org" "Phone Calls")
+    "* TODO %?\n %U\n")
+   ("t" "Todo" entry (file+headline "~/aztdc1/notes/notes.org" "Tasks")
+    "* %?\nEntered on %U\n  %i\n  %a")))
+
 ;; Set Fill Column
 (setq fill-column 80)
 
