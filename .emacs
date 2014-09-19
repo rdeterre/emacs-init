@@ -198,6 +198,13 @@
 
 ;;Eproject
 
+;; Frame size
+(setq default-frame-alist
+      '(
+        (width . 242)  ; characters
+        (height . 100) ; lines
+        ))
+
 ;;Ido-mode
 (ido-mode t)
 (ido-ubiquitous-mode t)
