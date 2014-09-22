@@ -202,7 +202,7 @@
 (setq default-frame-alist
       '(
         (width . 242)  ; characters
-        (height . 100) ; lines
+        (height . 60)  ; lines
         ))
 
 ;;Ido-mode
