@@ -65,6 +65,7 @@
 	 disaster
 ;;	 doctags
 ;;	 ecb
+         ediff-trees
 	 ein
 	 fill-column-indicator
 	 flymake
@@ -81,6 +82,7 @@
 	 powerline
 	 projectile
 ;;	 revive
+         rtags
 	 solarized-theme
 	 smartparens
 	 yasnippet
@@ -98,7 +100,7 @@
 
 (global-auto-revert-mode t)
 
-;; (load-theme 'heroku t)
+(load-theme 'heroku t)
 ;; (load-theme 'zenburn t)
 ;; (load-theme 'solarized-light t)
 
@@ -155,6 +157,9 @@
 	  (lambda ()
 	    (define-key c-mode-base-map (kbd "C-c a") 'disaster)))
 
+;; git-auto-commit-mode
+(require 'git-auto-commit-mode)
+(setq gac-automatically-push-p nil)
 
 ;; org-mode
 (add-hook 'org-mode-hook
@@ -169,7 +174,8 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((dot . t)
-   (calc . t))) ; this line activates dot
+   (calc . t)
+   (python . t))) ; this line activates dot
 
 (setq org-default-notes-file (concat "~/aztdc1/notes/notes.org"))
 (define-key global-map "\C-cc" 'org-capture)
@@ -180,6 +186,8 @@
     "* TODO %?\n %U\n")
    ("t" "Todo" entry (file+headline "~/aztdc1/notes/notes.org" "Tasks")
     "* %?\nEntered on %U\n  %i\n  %a")))
+
+(setq org-image-actual-width 300)
 
 ;; Set Fill Column
 (setq fill-column 80)
@@ -415,15 +423,12 @@
 (global-set-key (kbd "C-;") 'rebox-cycle)
 
 ;; RTags
-(add-to-list 'load-path "~/rtags/src")
-(add-to-list 'load-path "~/rtags/bin")
-(add-to-list 'load-path "~/.emacs.d/rtags/src")
-(add-to-list 'load-path "~/.emacs.d/rtags/bin")
-(if (file-exists-p "~/rtags")
-    (progn
-      (require 'rtags)
-      (rtags-enable-standard-keybindings c-mode-base-map)
-      (rtags-start-process-maybe)))
+(add-to-list 'load-path "~/.emacs.d/el-get/rtags/src")
+(add-to-list 'load-path "~/.emacs.d/el-get/rtags/bin")
+(setq rtags-path "~/.emacs.d/el-get/rtags/")
+(require 'rtags)
+(rtags-enable-standard-keybindings c-mode-base-map)
+(rtags-start-process-maybe)
 
 ;; (require 'hideshow-org)
 ;; (global-set-key "\C-ch" 'hs-org/minor-mode)
@@ -529,7 +534,6 @@
  '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "146d24de1bb61ddfa64062c29b5ff57065552a7c4019bee5d869e938782dfc2a" "96efbabfb6516f7375cdf85e7781fe7b7249b6e8114676d65337a1ffe78b78d9" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
- '(gac-automatically-push-p t)
  '(minimap-recenter-type (quote free))
  '(python-shell-interpreter (if (system-is-mac) (quote "/usr/local/bin/python") (quote "python")))
  '(safe-local-variable-values (quote ((c-basic-indent . 2) (c-basic-indent . 4) (c-basic-indent 4) (c-basic-offset 4)))))
@@ -805,6 +809,12 @@
                    (split-window-right))))))))
 
 (setq split-window-preferred-function 'my-split-window-sensibly)
+
+(require 'tramp)
+(add-to-list 'tramp-default-proxies-alist
+             '(nil "\\`root\\'" "/ssh:%h:"))
+(add-to-list 'tramp-default-proxies-alist
+             '((regexp-quote (system-name)) nil nil))
 
 ;; Winner-mode
 (when (fboundp 'winner-mode)
