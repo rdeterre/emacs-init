@@ -5,9 +5,18 @@
 
 ;; Utility functions
 
+;; Windows Emacs installation
+;;  - Fresh emacs straight from the FSF
+;;  - Fresh Git from git-scm
+;;  - Add Git to PATH.
+;;  - Make current user owner of C:/.emacs and C:/.emacs/server
+;;  - Start Emacs and hopefully enjoy forever
+
 (defun system-is-mac ()
   (interactive)
   (string-equal system-type "darwin"))
+
+(defconst windows-p (string-equal system-type "windows-nt"))
 
 (defun system-is-linux ()
   (interactive)
@@ -19,6 +28,11 @@
     (progn
       (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
       (setenv "PYTHONPATH" "/usr/local/lib/python2.7/site-packages:")))
+
+(if windows-p
+    (custom-set-variables
+     '(magit-git-executable "c:\\program files (x86)\\Git\\bin\\git.exe")
+     '(vc-git-program "c:\\program files (x86)\\Git\\bin\\git.exe")))
 
 ;; Based on http://melpa.milkbox.net/#/getting-started .
 
@@ -102,7 +116,6 @@
 
 (load-theme 'heroku t)
 ;; (load-theme 'zenburn t)
-;; (load-theme 'solarized-light t)
 
 (server-start)
 
@@ -783,6 +796,8 @@
 
 (require 'magit)
 (global-set-key (kbd "C-x g") 'magit-status)
+(if windows-p
+    (setq magit-git-executable "c:\\program files (x86)\\Git\\bin\\git.exe"))
 
 ;; Split direction
 (setq split-height-threshold 48) ;; Do not create pane less than 24 chars high
