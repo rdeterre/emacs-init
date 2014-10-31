@@ -548,6 +548,7 @@
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(minimap-recenter-type (quote free))
+ '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
  '(python-shell-interpreter (if (system-is-mac) (quote "/usr/local/bin/python") (quote "python")))
  '(safe-local-variable-values (quote ((c-basic-indent . 2) (c-basic-indent . 4) (c-basic-indent 4) (c-basic-offset 4)))))
 
@@ -706,7 +707,8 @@
                                  "Common Lisp"
                                  "Emacs Lisp"
                                  "NumPy"
-                                 "Python 2"))
+                                 "Python 2"
+                                 "Boost"))
 
 (defun rdeterre/dash-install (docset)
   ; Taken from http://jwintz.me/blog/2014/02/16/helm-dash-makes-you-efficient/
