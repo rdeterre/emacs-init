@@ -95,8 +95,7 @@
 	 pallet
 	 powerline
 	 projectile
-;;	 revive
-         rtags
+;;	 revive 
 	 solarized-theme
 	 smartparens
 	 yasnippet
@@ -107,6 +106,9 @@
 ;;	 color-theme-heroku
 	 heroku-theme
 	 magit)
+	 
+(unless windows-p
+	(add-to-list 'my-packages 'rtags))
 
        (mapcar 'el-get-as-symbol (mapcar 'el-get-source-name el-get-sources))))
 
@@ -436,12 +438,14 @@
 (global-set-key (kbd "C-;") 'rebox-cycle)
 
 ;; RTags
-(add-to-list 'load-path "~/.emacs.d/el-get/rtags/src")
-(add-to-list 'load-path "~/.emacs.d/el-get/rtags/bin")
-(setq rtags-path "~/.emacs.d/el-get/rtags/")
-(require 'rtags)
-(rtags-enable-standard-keybindings c-mode-base-map)
-(rtags-start-process-maybe)
+(unless windows-p 
+  (progn 
+    ((add-to-list 'load-path "~/.emacs.d/el-get/rtags/src")
+     (add-to-list 'load-path "~/.emacs.d/el-get/rtags/bin")
+     (setq rtags-path "~/.emacs.d/el-get/rtags/")
+     (require 'rtags)
+     (rtags-enable-standard-keybindings c-mode-base-map)
+     (rtags-start-process-maybe))))
 
 ;; (require 'hideshow-org)
 ;; (global-set-key "\C-ch" 'hs-org/minor-mode)
