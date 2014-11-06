@@ -95,7 +95,7 @@
 	 pallet
 	 powerline
 	 projectile
-;;	 revive 
+;;	 revive
 	 solarized-theme
 	 smartparens
 	 yasnippet
@@ -106,7 +106,7 @@
 ;;	 color-theme-heroku
 	 heroku-theme
 	 magit)
-	 
+
 (unless windows-p
 	(add-to-list 'my-packages 'rtags))
 
@@ -311,14 +311,6 @@
     (comment-dwim arg)))
 (global-set-key "\M-;" 'comment-dwim-line)
 
-;; Org Latex
-(setq org-latex-pdf-process
-      '("xelatex -interaction nonstopmode %f"
-        "xelatex -interaction nonstopmode %f")) ;; for multiple passes
-
-(require 'org-latex)
-(setq org-export-latex-listings t)
-
 (require 'org)
 (add-to-list 'org-export-backends 'md)
 
@@ -438,8 +430,8 @@
 (global-set-key (kbd "C-;") 'rebox-cycle)
 
 ;; RTags
-(unless windows-p 
-  (progn 
+(unless windows-p
+  (progn
     ((add-to-list 'load-path "~/.emacs.d/el-get/rtags/src")
      (add-to-list 'load-path "~/.emacs.d/el-get/rtags/bin")
      (setq rtags-path "~/.emacs.d/el-get/rtags/")
