@@ -721,7 +721,8 @@
 (defun rdeterre/dash-install-all-common-docsets ()
   (mapcar 'rdeterre/dash-install helm-dash-common-docsets))
 
-(rdeterre/dash-install-all-common-docsets)
+(unless windows-p
+  (rdeterre/dash-install-all-common-docsets))
 (global-set-key (kbd "C-c d") 'helm-dash)
 (add-hook 'python-mode-hook
           (lambda () (local-set-key (kbd "C-c c") 'helm-dash)))
