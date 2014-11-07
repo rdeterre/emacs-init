@@ -93,7 +93,7 @@
 	 nav
 	 org
 	 pallet
-	 powerline
+;;	 powerline			
 	 projectile
 ;;	 revive
 	 solarized-theme
