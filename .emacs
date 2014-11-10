@@ -93,7 +93,7 @@
 	 nav
 	 org
 	 pallet
-;;	 powerline			
+;;	 powerline
 	 projectile
 ;;	 revive
 	 solarized-theme
@@ -264,7 +264,11 @@
   "toggle full-screen mode"
   (interactive)
   (shell-command "wmctrl -r :ACTIVE: -btoggle,fullscreen"))
-(global-set-key (kbd "<f11>") 'djcb-full-screen-toggle)
+()
+
+(if (version<= emacs-version "24.3")
+    (global-set-key (kbd "<f11>") 'djcb-full-screen-toggle)
+  (global-set-key (kbd "<f11>") 'toggle-frame-fullscreen))
 
 ;; Indentation and alignment
 (setq c-default-style "k&r")
@@ -540,13 +544,27 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "146d24de1bb61ddfa64062c29b5ff57065552a7c4019bee5d869e938782dfc2a" "96efbabfb6516f7375cdf85e7781fe7b7249b6e8114676d65337a1ffe78b78d9" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
+ '(custom-safe-themes
+   (quote
+    ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "146d24de1bb61ddfa64062c29b5ff57065552a7c4019bee5d869e938782dfc2a" "96efbabfb6516f7375cdf85e7781fe7b7249b6e8114676d65337a1ffe78b78d9" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
+ '(magit-git-executable "c:\\program files (x86)\\Git\\bin\\git.exe")
  '(minimap-recenter-type (quote free))
  '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
- '(python-shell-interpreter (if (system-is-mac) (quote "/usr/local/bin/python") (quote "python")))
- '(safe-local-variable-values (quote ((c-basic-indent . 2) (c-basic-indent . 4) (c-basic-indent 4) (c-basic-offset 4)))))
+ '(python-shell-interpreter
+   (if
+       (system-is-mac)
+       (quote "/usr/local/bin/python")
+     (quote "python")))
+ '(safe-local-variable-values
+   (quote
+    ((intent-tabs-mode)
+     (c-basic-indent . 2)
+     (c-basic-indent . 4)
+     (c-basic-indent 4)
+     (c-basic-offset 4))))
+ '(vc-git-program "c:\\program files (x86)\\Git\\bin\\git.exe"))
 
 ;; Trucate lines
 ;;(set-default 'truncate-lines nil)
