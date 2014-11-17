@@ -94,6 +94,7 @@
 	 org
 	 pallet
 ;;	 powerline
+         powershell
 	 projectile
 ;;	 revive
 	 solarized-theme
