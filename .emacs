@@ -483,17 +483,17 @@
 
 ;; Windmove
 ;; (windmove-default-keybindings 'shift)
-(global-set-key (kbd "C-M-h")  'windmove-left)
-(global-set-key (kbd "C-M-l") 'windmove-right)
-(global-set-key (kbd "C-M-k")    'windmove-up)
-(global-set-key (kbd "C-M-j")  'windmove-down)
-(defun my-windmove-hook ()
-  (local-set-key (kbd "C-M-h")  'windmove-left)
-  (local-set-key (kbd "C-M-l") 'windmove-right)
-  (local-set-key (kbd "C-M-k")    'windmove-up)
-  (local-set-key (kbd "C-M-j")  'windmove-down))
-(add-hook 'c-mode-hook 'my-windmove-hook)
-(add-hook 'c++-mode-hook 'my-windmove-hook)
+(global-set-key (kbd "C-c h")  'windmove-left)
+(global-set-key (kbd "C-c l") 'windmove-right)
+(global-set-key (kbd "C-c k")    'windmove-up)
+(global-set-key (kbd "C-c j")  'windmove-down)
+;; (defun my-windmove-hook ()
+;;   (local-set-key (kbd "C-M-h")  'windmove-left)
+;;   (local-set-key (kbd "C-M-l") 'windmove-right)
+;;   (local-set-key (kbd "C-M-k")    'windmove-up)
+;;   (local-set-key (kbd "C-M-j")  'windmove-down))
+;; (add-hook 'c-mode-hook 'my-windmove-hook)
+;; (add-hook 'c++-mode-hook 'my-windmove-hook)
 
 ;; Make windmove work in term mode (http://stackoverflow.com/a/12509277/1857952)
 (eval-after-load "term"
@@ -710,7 +710,7 @@
 ;; Helm
 (require 'helm)
 (global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-c h") 'helm-mini)
+(global-set-key (kbd "C-c ;") 'helm-mini)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-c i") 'helm-imenu)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
