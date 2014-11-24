@@ -3,14 +3,28 @@
 ;; Author : Romain Deterre <romain@alazartech.com>
 ;;
 
-;; Utility functions
-
-;; Windows Emacs installation
+;; Windows installation
 ;;  - Fresh emacs straight from the FSF
 ;;  - Fresh Git from git-scm
 ;;  - Add Git to PATH.
 ;;  - Make current user owner of C:/.emacs and C:/.emacs/server
-;;  - Start Emacs and hopefully enjoy forever
+;;  - Start Emacs and enjoy forever
+;;
+;; Fedora installation
+;;  - Install emacs, git, cmake, "Development Tools" (group), gcc-c++
+;;    + emacs
+;;    + git
+;;    + bzr
+;;    + hg
+;;    + cmake
+;;    + "Development Tools" (yum groupinstall "Development Tools")
+;;    + gcc-c++
+;;    + texinfo
+;;  - Install all the following with devel
+;;    + llvm
+;;    + clang
+;;    + zlib
+;;    + openssl
 
 (defun system-is-mac ()
   (interactive)
@@ -74,11 +88,9 @@
 	 auto-complete
 	 autopair
 	 c-eldoc
-;;	 cmake-project
 	 column-marker
+         dash
 	 disaster
-;;	 doctags
-;;	 ecb
          ediff-trees
 	 ein
 	 fill-column-indicator
@@ -92,26 +104,21 @@
 	 multiple-cursors
 	 nav
 	 org
-	 pallet
-;;	 powerline
          powershell
 	 projectile
-;;	 revive
-	 solarized-theme
 	 smartparens
 	 yasnippet
 	 zenburn-theme
 	 git-auto-commit-mode
 	 sr-speedbar
          rebox2
-;;	 color-theme-heroku
 	 heroku-theme
-	 magit)
+	 magit)))
 
 (unless windows-p
-	(add-to-list 'my-packages 'rtags))
+  (add-to-list 'my-packages 'rtags))
 
-       (mapcar 'el-get-as-symbol (mapcar 'el-get-source-name el-get-sources))))
+(mapcar 'el-get-as-symbol (mapcar 'el-get-source-name el-get-sources))
 
 (el-get 'sync my-packages)
 
@@ -437,12 +444,12 @@
 ;; RTags
 (unless windows-p
   (progn
-    ((add-to-list 'load-path "~/.emacs.d/el-get/rtags/src")
-     (add-to-list 'load-path "~/.emacs.d/el-get/rtags/bin")
-     (setq rtags-path "~/.emacs.d/el-get/rtags/")
-     (require 'rtags)
-     (rtags-enable-standard-keybindings c-mode-base-map)
-     (rtags-start-process-maybe))))
+    (add-to-list 'load-path "~/.emacs.d/el-get/rtags/src")
+    (add-to-list 'load-path "~/.emacs.d/el-get/rtags/bin")
+    (setq rtags-path "~/.emacs.d/el-get/rtags/")
+    (require 'rtags)
+    (rtags-enable-standard-keybindings c-mode-base-map)
+    (rtags-start-process-maybe)))
 
 ;; (require 'hideshow-org)
 ;; (global-set-key "\C-ch" 'hs-org/minor-mode)
@@ -550,7 +557,6 @@
     ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "146d24de1bb61ddfa64062c29b5ff57065552a7c4019bee5d869e938782dfc2a" "96efbabfb6516f7375cdf85e7781fe7b7249b6e8114676d65337a1ffe78b78d9" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
- '(magit-git-executable "c:\\program files (x86)\\Git\\bin\\git.exe")
  '(minimap-recenter-type (quote free))
  '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
  '(python-shell-interpreter
