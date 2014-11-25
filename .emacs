@@ -131,6 +131,8 @@
   (if (member "Source Code Pro" (font-family-list))
       (set-frame-font "Source Code Pro-9" nil t)
     (set-face-attribute 'default nil :height 100)))
+(if windows-p
+    (set-frame-font "Courier New"))
 
 
 ;; Scrolling
