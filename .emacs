@@ -276,7 +276,7 @@
   (shell-command "wmctrl -r :ACTIVE: -btoggle,fullscreen"))
 ()
 
-(if (version<= emacs-version "24.3")
+(if (version< emacs-version "24.4")
     (global-set-key (kbd "<f11>") 'djcb-full-screen-toggle)
   (global-set-key (kbd "<f11>") 'toggle-frame-fullscreen))
 
