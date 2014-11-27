@@ -11,7 +11,7 @@
 ;;  - Start Emacs and enjoy forever
 ;;
 ;; Fedora installation
-;;  - Install emacs, git, cmake, "Development Tools" (group), gcc-c++
+;;  - Install without devel:
 ;;    + emacs
 ;;    + git
 ;;    + bzr
@@ -20,7 +20,7 @@
 ;;    + "Development Tools" (yum groupinstall "Development Tools")
 ;;    + gcc-c++
 ;;    + texinfo
-;;  - Install all the following with devel
+;;  - Install all the following with devel:
 ;;    + llvm
 ;;    + clang
 ;;    + zlib
