@@ -738,7 +738,9 @@
                                  "Emacs Lisp"
                                  "NumPy"
                                  "Python 2"
-                                 "Boost"))
+                                 "Boost"
+                                 "AngularJS"
+                                 "Bootstrap 3"))
 
 (defun rdeterre/dash-install (docset)
   ; Taken from http://jwintz.me/blog/2014/02/16/helm-dash-makes-you-efficient/
