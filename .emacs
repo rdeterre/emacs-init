@@ -85,6 +85,7 @@
 (setq my-packages
       (append
        '(ace-jump-mode
+         auctex
 	 auto-complete
 	 autopair
 	 c-eldoc
