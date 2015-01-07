@@ -89,12 +89,10 @@
 	 auto-complete
 	 autopair
 	 c-eldoc
-	 column-marker
          dash
 	 disaster
          ediff-trees
 	 ein
-	 fill-column-indicator
 	 flymake
 	 helm
          helm-dash
@@ -593,8 +591,6 @@
 ;; (setq whitespace-style '(face lines-tail))
 
 ;; (add-hook 'prog-mode-hook 'whitespace-mode)
-(require 'column-marker)
-(add-hook 'prog-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
 ;; Scrollers - M-n and M-p
 (global-set-key "\M-n" "\C-u3\C-v")
