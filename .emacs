@@ -108,11 +108,8 @@
 	 heroku-theme
 	 magit)))
 
-(unless windows-p
-  (add-to-list 
-   'my-packages
-   '(rtags
-     auctex)))
+(unless windows-p (add-to-list 'my-packages 'rtags))
+(unless windows-p (add-to-list 'my-packages 'auctex))
 
 (mapcar 'el-get-as-symbol (mapcar 'el-get-source-name el-get-sources))
 
@@ -545,8 +542,7 @@
      (c-basic-indent . 2)
      (c-basic-indent . 4)
      (c-basic-indent 4)
-     (c-basic-offset 4))))
- '(vc-git-program "c:\\program files (x86)\\Git\\bin\\git.exe"))
+     (c-basic-offset 4)))))
 
 ;; Trucate lines
 ;;(set-default 'truncate-lines nil)
