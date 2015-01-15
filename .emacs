@@ -85,23 +85,18 @@
 (setq my-packages
       (append
        '(ace-jump-mode
-         auctex
 	 auto-complete
-	 autopair
 	 c-eldoc
          dash
 	 disaster
          ediff-trees
-	 ein
 	 flymake
 	 helm
          helm-dash
 	 hideshow-org
 	 ido-ubiquitous
 	 jedi
-	 minimap
 	 multiple-cursors
-	 nav
 	 org
          powershell
 	 projectile
@@ -109,13 +104,15 @@
 	 yasnippet
 	 zenburn-theme
 	 git-auto-commit-mode
-	 sr-speedbar
          rebox2
 	 heroku-theme
 	 magit)))
 
 (unless windows-p
-  (add-to-list 'my-packages 'rtags))
+  (add-to-list 
+   'my-packages
+   '(rtags
+     auctex)))
 
 (mapcar 'el-get-as-symbol (mapcar 'el-get-source-name el-get-sources))
 
@@ -175,6 +172,9 @@
 ;; c-eldoc
 (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
 
+;; Delete selection mode
+(delete-selection-mode 1)
+
 ;; disaster
 (require 'disaster)
 (add-hook 'c-mode-common-hook
@@ -226,8 +226,6 @@
 ;; http://www.masteringemacs.org/articles/2011/10/02/improving-performance-emacs-display-engine/
 (setq redisplay-dont-pause t)
 
-;;EIN - M-x ein:notebooklist-openq
-
 ;;Eproject
 
 ;; Frame size
@@ -262,7 +260,7 @@
 
 
 ;; Projectile
-;(projectile-global-mode)
+(projectile-global-mode)
 
 ;; Outshine
 ;(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
@@ -394,10 +392,6 @@
 
 (add-hook 'org-export-latex-after-initial-vars-hook 'my-auto-tex-parameters)
 
-;; Nav
-(require 'nav)
-(nav-disable-overeager-window-splitting)
-
 ;; Header-Implementation switch
 (global-set-key  (kbd "C-c o") 'ff-find-other-file)
 
@@ -466,26 +460,6 @@
 ;  (irony-mode t))
 
 (add-hook 'c-mode-common-hook 'my-c++-hooks)
-
-;(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-; '(irony-server-executable "~/.emacs.d/irony-mode/build/server/irony-server" nil (irony)))
-
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(minimap-semantic-function-face ((t (:inherit (font-lock-function-name-face minimap-font-face) :background "gray10" :box (:line-width 1 :color "white") :height 30))))
-;;  '(minimap-semantic-type-face ((t (:inherit (font-lock-type-face minimap-font-face) :background "gray10" :box (:line-width 1 :color "white") :height 30))))
-;;  '(minimap-semantic-variable-face ((t (:inherit (font-lock-variable-name-face minimap-font-face) :background "gray10" :box (:line-width 1 :color "white") :height 30)))))
-
-
-;; TODO : Invesigate.
-;;(require 'doctags)
 
 (set 'shift-selection-mode nil)
 
@@ -827,8 +801,6 @@
 (require 'saveplace)
 (setq-default save-place t)
 (setq save-place-file "~/.emacs.d/saved-places")
-
-(require 'sr-speedbar)
 
 (require 'magit)
 (global-set-key (kbd "C-x g") 'magit-status)
