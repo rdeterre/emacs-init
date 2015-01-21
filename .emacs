@@ -52,9 +52,9 @@
 
 (require 'package)
 (add-to-list 'package-archives
-  ;; The 't' means to append, so that MELPA comes after the more
-  ;; stable ELPA archive.
-  '("melpa" . "http://melpa.milkbox.net/packages/") t)
+             ;; The 't' means to append, so that MELPA comes after the more
+             ;; stable ELPA archive.
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 ;; Add ELPA if necessary. Looking at the El-Get package.rcp recipe in
 ;; ~/local/opt/el-get/recipes it seems this is probably unnecessary.
@@ -85,16 +85,15 @@
 (setq my-packages
       (append
        '(ace-jump-mode
-	 auto-complete
+         company-mode
 	 c-eldoc
          dash
-	 disaster
          ediff-trees
-	 flymake
 	 helm
          helm-dash
 	 hideshow-org
 	 ido-ubiquitous
+         irony-mode
 	 jedi
 	 multiple-cursors
 	 org
@@ -108,16 +107,13 @@
 	 heroku-theme
 	 magit)))
 
-(unless windows-p (add-to-list 'my-packages 'rtags))
-(unless windows-p (add-to-list 'my-packages 'auctex))
-
 (mapcar 'el-get-as-symbol (mapcar 'el-get-source-name el-get-sources))
 
 (el-get 'sync my-packages)
 
 (global-auto-revert-mode t)
 
-(load-theme 'heroku t)
+;; (load-theme 'heroku t)
 ;; (load-theme 'zenburn t)
 
 (server-start)
@@ -164,23 +160,35 @@
         ))
 (yas-global-mode 1)
 (add-hook 'term-mode-hook (lambda()
-        (setq yas-dont-activate t)))
+                            (setq yas-dont-activate t)))
 
 ;; c-eldoc
 (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
 
+;; company-mode
+(add-hook 'after-init-hook 'global-company-mode)
+
 ;; Delete selection mode
 (delete-selection-mode 1)
-
-;; disaster
-(require 'disaster)
-(add-hook 'c-mode-common-hook
-	  (lambda ()
-	    (define-key c-mode-base-map (kbd "C-c a") 'disaster)))
 
 ;; git-auto-commit-mode
 (require 'git-auto-commit-mode)
 (setq gac-automatically-push-p nil)
+
+;; irony-mode
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 ;; org-mode
 (add-hook 'org-mode-hook
@@ -202,11 +210,11 @@
 (define-key global-map "\C-cc" 'org-capture)
 
 (setq org-capture-templates
- '(("c" "Phone call" entry
-    (file+headline "~/aztdc1/notes/notes.org" "Phone Calls")
-    "* TODO %?\n %U\n")
-   ("t" "Todo" entry (file+headline "~/aztdc1/notes/notes.org" "Tasks")
-    "* %?\nEntered on %U\n  %i\n  %a")))
+      '(("c" "Phone call" entry
+         (file+headline "~/aztdc1/notes/notes.org" "Phone Calls")
+         "* TODO %?\n %U\n")
+        ("t" "Todo" entry (file+headline "~/aztdc1/notes/notes.org" "Tasks")
+         "* %?\nEntered on %U\n  %i\n  %a")))
 
 (setq org-image-actual-width 300)
 
@@ -260,8 +268,8 @@
 (projectile-global-mode)
 
 ;; Outshine
-;(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
-;(add-hook 'python-mode-hook 'outline-minor-mode)
+                                        ;(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
+                                        ;(add-hook 'python-mode-hook 'outline-minor-mode)
 
 ;; Fullscreen function.
 (defun djcb-full-screen-toggle ()
@@ -282,20 +290,6 @@
 (defun my-c-setup ()
   (c-set-offset 'innamespace 0))
 (add-hook 'c++-mode-hook 'my-c-setup)
-
-;; Flymake with pyflakes
-(when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "pyflakes" (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pyflakes-init)))
-
-;(add-hook 'find-file-hook 'flymake-find-file-hook)
 
 ;; TODO : Add CMake support again.
 ;; ;Emacs CMake project mode
@@ -344,48 +338,48 @@
 ;; Specify default packages to be included in every tex file, whether pdflatex or xelatex
 (setq org-export-latex-packages-alist
       '(("" "graphicx" t)
-            ("" "longtable" nil)
-            ("" "float" nil)))
+        ("" "longtable" nil)
+        ("" "float" nil)))
 
 (defun my-auto-tex-parameters ()
-      "Automatically select the tex packages to include."
-      ;; default packages for ordinary latex or pdflatex export
+  "Automatically select the tex packages to include."
+  ;; default packages for ordinary latex or pdflatex export
+  (setq org-export-latex-default-packages-alist
+        '(("AUTO" "inputenc" t)
+          ("T1"   "fontenc"   t)
+          (""     "fixltx2e"  nil)
+          (""     "wrapfig"   nil)
+          (""     "soul"      t)
+          (""     "textcomp"  t)
+          (""     "marvosym"  t)
+          (""     "wasysym"   t)
+          (""     "latexsym"  t)
+          (""     "amssymb"   t)
+          (""     "hyperref"  nil)))
+
+  ;; Packages to include when xelatex is used
+  (if (string-match "LATEX_CMD: xelatex" (buffer-string))
       (setq org-export-latex-default-packages-alist
-            '(("AUTO" "inputenc" t)
-              ("T1"   "fontenc"   t)
-              (""     "fixltx2e"  nil)
-              (""     "wrapfig"   nil)
-              (""     "soul"      t)
-              (""     "textcomp"  t)
-              (""     "marvosym"  t)
-              (""     "wasysym"   t)
-              (""     "latexsym"  t)
-              (""     "amssymb"   t)
-              (""     "hyperref"  nil)))
+            '(("" "fontspec" t)
+              ("" "xunicode" t)
+              ("" "url" t)
+              ("" "rotating" t)
+              ("american" "babel" t)
+              ("babel" "csquotes" t)
+              ("" "soul" t)
+              ("xetex" "hyperref" nil)
+              )))
 
-      ;; Packages to include when xelatex is used
-      (if (string-match "LATEX_CMD: xelatex" (buffer-string))
-          (setq org-export-latex-default-packages-alist
-                '(("" "fontspec" t)
-                  ("" "xunicode" t)
-                  ("" "url" t)
-                  ("" "rotating" t)
-                  ("american" "babel" t)
-                  ("babel" "csquotes" t)
-                  ("" "soul" t)
-                  ("xetex" "hyperref" nil)
-                  )))
-
-      (if (string-match "LATEX_CMD: xelatex" (buffer-string))
-          (setq org-export-latex-classes
-                (cons '("article"
-                        "\\documentclass[11pt,article,oneside]{memoir}"
-                        ("\\section{%s}" . "\\section*{%s}")
-                        ("\\subsection{%s}" . "\\subsection*{%s}")
-                        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                        ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                        ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
-                      org-export-latex-classes))))
+  (if (string-match "LATEX_CMD: xelatex" (buffer-string))
+      (setq org-export-latex-classes
+            (cons '("article"
+                    "\\documentclass[11pt,article,oneside]{memoir}"
+                    ("\\section{%s}" . "\\section*{%s}")
+                    ("\\subsection{%s}" . "\\subsection*{%s}")
+                    ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                    ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                    ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+                  org-export-latex-classes))))
 
 (add-hook 'org-export-latex-after-initial-vars-hook 'my-auto-tex-parameters)
 
@@ -393,7 +387,7 @@
 (global-set-key  (kbd "C-c o") 'ff-find-other-file)
 
 ;; Header Guards
-; Create Header Guards with f12
+                                        ; Create Header Guards with f12
 (global-set-key [f12]
                 '(lambda ()
                    (interactive)
@@ -446,15 +440,15 @@
 ;; (require 'hideshow-org)
 ;; (global-set-key "\C-ch" 'hs-org/minor-mode)
 
-(defun my-c++-hooks ()
-  "Enable the hooks in the preferred order: 'yas -> auto-complete -> irony'."
-  ;; if yas is not set before (auto-complete-mode 1), overlays may persist after
-  ;; an expansion.
-  ;; (yas/minor-mode-on)
-  (auto-complete-mode t))
-  ;; (hs-org/minor-mode t))
+;; (defun my-c++-hooks ()
+;;   "Enable the hooks in the preferred order: 'yas -> auto-complete -> irony'."
+;; if yas is not set before (auto-complete-mode 1), overlays may persist after
+;; an expansion.
+;; (yas/minor-mode-on)
+;; (auto-complete-mode t))
+;; (hs-org/minor-mode t))
 ;; )
-;  (irony-mode t))
+                                        ;  (irony-mode t))
 
 (add-hook 'c-mode-common-hook 'my-c++-hooks)
 
@@ -500,7 +494,7 @@
 
 (defun align-enum-class (langelem)
   (if (inside-class-enum-p (c-langelem-pos langelem))
-    (c-lineup-topmost-intro-cont langelem)))
+      (c-lineup-topmost-intro-cont langelem)))
 
 (defun align-enum-class-closing-brace (langelem)
   (if (inside-class-enum-p (c-langelem-pos langelem))
@@ -710,13 +704,13 @@
                                  "Bootstrap 3"))
 
 (defun rdeterre/dash-install (docset)
-  ; Taken from http://jwintz.me/blog/2014/02/16/helm-dash-makes-you-efficient/
+                                        ; Taken from http://jwintz.me/blog/2014/02/16/helm-dash-makes-you-efficient/
   (message (file-exists-p (concat docset ".docset")))
   (unless (file-exists-p
            (concat
             (concat helm-dash-docsets-path "/")
-           ;;  (concat (nth 0 (split-string docset "_"))
-           ;;          ".docset")))
+            ;;  (concat (nth 0 (split-string docset "_"))
+            ;;          ".docset")))
             (concat docset ".docset")))
     (helm-dash-install-docset
      (replace-regexp-in-string " " "_" docset))))
@@ -791,8 +785,8 @@
 
 ;; ansi-term colors
 (setq ansi-term-color-vector
-  [term term-color-black term-color-red term-color-green term-color-yellow
-    term-color-blue term-color-magenta term-color-cyan term-color-white])
+      [term term-color-black term-color-red term-color-green term-color-yellow
+            term-color-blue term-color-magenta term-color-cyan term-color-white])
 
 (require 'saveplace)
 (setq-default save-place t)
@@ -837,7 +831,7 @@
 
 ;; Winner-mode
 (when (fboundp 'winner-mode)
-      (winner-mode 1))
+  (winner-mode 1))
 
 ;; Arduino files
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c-mode))
