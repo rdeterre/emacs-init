@@ -125,10 +125,15 @@
 (if (system-is-mac)
     (set-face-attribute 'default nil :height 120)
   (if (member "Source Code Pro" (font-family-list))
-      (set-frame-font "Source Code Pro-9" nil t)
+
+      ;; (set-frame-font "Source Code Pro-9" nil t)
+      (add-to-list 'default-frame-alist
+                   '(font . "Source Code Pro-9"))
     (set-face-attribute 'default nil :height 100)))
 (if windows-p
-    (set-frame-font "Courier New"))
+    ;; (set-frame-font "Courier New"))
+    (add-to-list 'default-frame-alist
+		 '(font . "Consolas 9")))
 
 
 ;; Scrolling
@@ -234,11 +239,8 @@
 ;;Eproject
 
 ;; Frame size
-(setq default-frame-alist
-      '(
-        (width . 242)  ; characters
-        (height . 60)  ; lines
-        ))
+(add-to-list 'default-frame-alist '(width . 242))
+(add-to-list 'default-frame-alist '(height . 60))
 
 ;;Ido-mode
 (ido-mode t)
