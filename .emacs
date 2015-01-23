@@ -24,7 +24,7 @@
 ;;    + llvm
 ;;    + clang
 ;;    + zlib
-;;    + openssl
+;;    + Openssl
 
 (defun system-is-mac ()
   (interactive)
@@ -796,8 +796,6 @@
 
 (require 'magit)
 (global-set-key (kbd "C-x g") 'magit-status)
-(if windows-p
-    (setq magit-git-executable "c:\\program files (x86)\\Git\\bin\\git.exe"))
 
 ;; Split direction
 (setq split-height-threshold 48) ;; Do not create pane less than 24 chars high
