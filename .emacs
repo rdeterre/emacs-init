@@ -534,7 +534,8 @@
      (quote "python")))
  '(safe-local-variable-values
    (quote
-    ((intent-tabs-mode)
+    ((js-indent-level . 2)
+     (intent-tabs-mode)
      (c-basic-indent . 2)
      (c-basic-indent . 4)
      (c-basic-indent 4)
@@ -703,7 +704,9 @@
                                  "Python 2"
                                  "Boost"
                                  "AngularJS"
-                                 "Bootstrap 3"))
+                                 "Bootstrap 3"
+                                 "NodeJS"
+                                 "Express"))
 
 (defun rdeterre/dash-install (docset)
                                         ; Taken from http://jwintz.me/blog/2014/02/16/helm-dash-makes-you-efficient/
