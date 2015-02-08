@@ -231,6 +231,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (setq inhibit-splash-screen t)
+(setq visible-bell 1)
 (scroll-bar-mode -1)
 
 ;; Prevent fractionned display
