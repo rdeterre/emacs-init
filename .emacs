@@ -711,7 +711,13 @@
                                  "AngularJS"
                                  "Bootstrap 3"
                                  "NodeJS"
-                                 "Express"))
+                                 "Express"
+                                 "D3JS"
+                                 "GLib"
+                                 "HTML"
+                                 "Jade"
+                                 "LaTeX"
+                                 "Less"))
 
 (defun rdeterre/dash-install (docset)
                                         ; Taken from http://jwintz.me/blog/2014/02/16/helm-dash-makes-you-efficient/
