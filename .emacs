@@ -95,6 +95,7 @@
 	 ido-ubiquitous
          irony-mode
 	 jedi
+         js2-mode
 	 multiple-cursors
 	 org
          powershell
@@ -250,6 +251,9 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
+
+;; js2-mode
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 ;; ;; Powerline
 ;; (powerline-default-theme)
