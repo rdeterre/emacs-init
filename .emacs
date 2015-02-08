@@ -534,7 +534,8 @@
      (quote "python")))
  '(safe-local-variable-values
    (quote
-    ((intent-tabs-mode)
+    ((js-indent-level . 2)
+     (intent-tabs-mode)
      (c-basic-indent . 2)
      (c-basic-indent . 4)
      (c-basic-indent 4)
