@@ -245,6 +245,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (setq inhibit-splash-screen t)
+(setq visible-bell 1)
 (scroll-bar-mode -1)
 
 ;; Prevent fractionned display
@@ -265,6 +266,9 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
+
+;; js2-mode
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 ;; ;; Powerline
 ;; (powerline-default-theme)
@@ -721,7 +725,13 @@
                                  "AngularJS"
                                  "Bootstrap 3"
                                  "NodeJS"
-                                 "Express"))
+                                 "Express"
+                                 "D3JS"
+                                 "GLib"
+                                 "HTML"
+                                 "Jade"
+                                 "LaTeX"
+                                 "Less"))
 
 (defun rdeterre/dash-install (docset)
                                         ; Taken from http://jwintz.me/blog/2014/02/16/helm-dash-makes-you-efficient/
