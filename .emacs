@@ -256,6 +256,9 @@
 ;; js2-mode
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
+;; Octave
+(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+
 ;; ;; Powerline
 ;; (powerline-default-theme)
 
