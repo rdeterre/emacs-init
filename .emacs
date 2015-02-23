@@ -96,6 +96,7 @@
          irony-mode
 	 jedi
          js2-mode
+         js-doc
 	 multiple-cursors
 	 org
          powershell
@@ -154,10 +155,6 @@
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
-;; Smartparens
-(require 'smartparens)
-(smartparens-global-mode t)
-
 ;; Yasnippet
 (require 'yasnippet)
 (setq yas-snippet-dirs
@@ -177,6 +174,9 @@
 ;; Delete selection mode
 (delete-selection-mode 1)
 
+;; electric-pair-mode
+(electric-pair-mode 1)
+
 ;; git-auto-commit-mode
 (require 'git-auto-commit-mode)
 (setq gac-automatically-push-p nil)
@@ -195,6 +195,20 @@
     'irony-completion-at-point-async))
 (add-hook 'irony-mode-hook 'my-irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+;; js2-mode
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+;; js-doc
+(setq js-doc-mail-address "your email address"
+      js-doc-author (format "your name <%s>" js-doc-mail-address)
+      js-doc-url "url of your website"
+      js-doc-license "license name")
+
+(add-hook 'js2-mode-hook
+          #'(lambda ()
+              (define-key js2-mode-map "\C-co" 'js-doc-insert-function-doc)
+              (define-key js2-mode-map "@" 'js-doc-insert-tag)))
 
 ;; org-mode
 (add-hook 'org-mode-hook
