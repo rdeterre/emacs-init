@@ -20,11 +20,14 @@
 ;;    + "Development Tools" (yum groupinstall "Development Tools")
 ;;    + gcc-c++
 ;;    + texinfo
+;;    + python-jedi
+;;    + python-virtualenv
 ;;  - Install all the following with devel:
 ;;    + llvm
 ;;    + clang
 ;;    + zlib
 ;;    + Openssl
+
 
 (defun system-is-mac ()
   (interactive)
