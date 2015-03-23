@@ -523,6 +523,13 @@
 ;;   (local-set-key (kbd "C-M-j")  'windmove-down))
 ;; (add-hook 'c-mode-hook 'my-windmove-hook)
 ;; (add-hook 'c++-mode-hook 'my-windmove-hook)
+(eval-after-load "term"
+  '(progn
+     (define-key term-raw-map (kbd "C-c h") 'windmove-left)
+     (define-key term-raw-map (kbd "C-c l") 'windmove-right)
+     (define-key term-raw-map (kbd "C-c k") 'windmove-up)
+     (define-key term-raw-map (kbd "C-c j") 'windmove-down)
+     ))
 
 ;; Make windmove work in term mode (http://stackoverflow.com/a/12509277/1857952)
 (eval-after-load "term"
