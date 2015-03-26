@@ -100,6 +100,7 @@
 	 jedi
          js2-mode
          js-doc
+         moe-theme
 	 multiple-cursors
 	 org
          powershell
@@ -123,7 +124,8 @@
 
 ;; (load-theme 'heroku t)
 ;; (load-theme 'zenburn t)
-
+(load-theme 'moe-dark t)
+(moe-theme-set-color 'purple)
 (server-start)
 
 ;; Font
