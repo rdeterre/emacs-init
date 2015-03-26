@@ -125,8 +125,10 @@
 
 ;; (load-theme 'heroku t)
 ;; (load-theme 'zenburn t)
-(load-theme 'moe-dark t)
-(moe-theme-set-color 'purple)
+(require 'moe-theme)
+(setq moe-theme-mode-line-color 'orange)
+(moe-light)
+
 (server-start)
 
 ;; Font
