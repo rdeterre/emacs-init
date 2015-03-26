@@ -106,6 +106,7 @@
 	 projectile
 	 smartparens
 	 yasnippet
+         yasnippet-snippets
 	 zenburn-theme
 	 git-auto-commit-mode
          rebox2
@@ -175,11 +176,22 @@
 (require 'yasnippet)
 (setq yas-snippet-dirs
       '("~/.emacs.d/snippets"
-        "~/.emacs.d/yasnippet-snippets"
+        "~/.emacs.d/el-get/yasnippet-snippets"
         ))
 (yas-global-mode 1)
 (add-hook 'term-mode-hook (lambda()
                             (setq yas-dont-activate t)))
+
+(defun company-yasnippet-or-completion ()
+  (interactive)
+  (let ((yas-fallback-behavior nil))
+    (unless (yas-expand)
+      (call-interactively #'company-complete-common))))
+
+(add-hook 'company-mode-hook (lambda ()
+                               (substitute-key-definition 'company-complete-common
+                                                          'company-yasnippet-or-completion
+                                                          company-active-map)))
 
 ;; c-eldoc
 (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
