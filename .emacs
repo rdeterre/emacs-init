@@ -269,6 +269,15 @@
 ;; Projectile
 (projectile-global-mode)
 
+
+;; Python
+(setq python-shell-interpreter
+      (if (system-is-mac)
+          (quote "/usr/local/bin/python")
+        (quote "python"))
+      python-shell-interpreter-args "-i")
+
+
 ;; Outshine
                                         ;(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
                                         ;(add-hook 'python-mode-hook 'outline-minor-mode)
@@ -527,11 +536,6 @@
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(minimap-recenter-type (quote free))
  '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
- '(python-shell-interpreter
-   (if
-       (system-is-mac)
-       (quote "/usr/local/bin/python")
-     (quote "python")))
  '(safe-local-variable-values
    (quote
     ((intent-tabs-mode)
