@@ -20,11 +20,14 @@
 ;;    + "Development Tools" (yum groupinstall "Development Tools")
 ;;    + gcc-c++
 ;;    + texinfo
+;;    + python-jedi
+;;    + python-virtualenv
 ;;  - Install all the following with devel:
 ;;    + llvm
 ;;    + clang
 ;;    + zlib
 ;;    + Openssl
+
 
 (defun system-is-mac ()
   (interactive)
@@ -95,17 +98,24 @@
 	 ido-ubiquitous
          irony-mode
 	 jedi
+         js2-mode
+         js-doc
+         moe-theme
 	 multiple-cursors
 	 org
          powershell
 	 projectile
 	 smartparens
 	 yasnippet
+         yasnippet-snippets
 	 zenburn-theme
 	 git-auto-commit-mode
          rebox2
 	 heroku-theme
 	 magit)))
+
+(unless windows-p
+  (add-to-list 'my-packages 'rtags))
 
 (mapcar 'el-get-as-symbol (mapcar 'el-get-source-name el-get-sources))
 
@@ -115,6 +125,9 @@
 
 ;; (load-theme 'heroku t)
 ;; (load-theme 'zenburn t)
+(require 'moe-theme)
+(setq moe-theme-mode-line-color 'orange)
+(moe-light)
 
 (server-start)
 
@@ -153,19 +166,36 @@
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
-;; Smartparens
-(require 'smartparens)
-(smartparens-global-mode t)
+;; Backups
+(setq
+ backup-by-copying t      ; don't clobber symlinks
+ backup-directory-alist
+ '(("." . "~/.saves"))    ; don't litter my fs tree
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t)       ; use versioned backups
 
 ;; Yasnippet
 (require 'yasnippet)
 (setq yas-snippet-dirs
       '("~/.emacs.d/snippets"
-        "~/.emacs.d/yasnippet-snippets"
+        "~/.emacs.d/el-get/yasnippet-snippets"
         ))
 (yas-global-mode 1)
 (add-hook 'term-mode-hook (lambda()
                             (setq yas-dont-activate t)))
+
+(defun company-yasnippet-or-completion ()
+  (interactive)
+  (let ((yas-fallback-behavior nil))
+    (unless (yas-expand)
+      (call-interactively #'company-complete-common))))
+
+(add-hook 'company-mode-hook (lambda ()
+                               (substitute-key-definition 'company-complete-common
+                                                          'company-yasnippet-or-completion
+                                                          company-active-map)))
 
 ;; c-eldoc
 (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
@@ -175,6 +205,9 @@
 
 ;; Delete selection mode
 (delete-selection-mode 1)
+
+;; electric-pair-mode
+(electric-pair-mode 1)
 
 ;; git-auto-commit-mode
 (require 'git-auto-commit-mode)
@@ -194,6 +227,20 @@
     'irony-completion-at-point-async))
 (add-hook 'irony-mode-hook 'my-irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+;; js2-mode
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+;; js-doc
+(setq js-doc-mail-address "your email address"
+      js-doc-author (format "your name <%s>" js-doc-mail-address)
+      js-doc-url "url of your website"
+      js-doc-license "license name")
+
+(add-hook 'js2-mode-hook
+          #'(lambda ()
+              (define-key js2-mode-map "\C-co" 'js-doc-insert-function-doc)
+              (define-key js2-mode-map "@" 'js-doc-insert-tag)))
 
 ;; org-mode
 (add-hook 'org-mode-hook
@@ -230,6 +277,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (setq inhibit-splash-screen t)
+(setq visible-bell 1)
 (scroll-bar-mode -1)
 
 ;; Prevent fractionned display
@@ -250,6 +298,12 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
+
+;; js2-mode
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+;; Octave
+(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
 
 ;; ;; Powerline
 ;; (powerline-default-theme)
@@ -465,6 +519,22 @@
 
 (set 'shift-selection-mode nil)
 
+;;
+;; Unicode: Default to UTF-8 encoding
+;;
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+;; backwards compatibility as default-buffer-file-coding-system
+;; is deprecated in 23.2.
+(if (boundp 'buffer-file-coding-system)
+    (setq-default buffer-file-coding-system 'utf-8)
+  (setq default-buffer-file-coding-system 'utf-8))
+
+;; Treat clipboard input as UTF-8 string first; compound text next, etc.
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
 ;; Windmove
 ;; (windmove-default-keybindings 'shift)
 (global-set-key (kbd "C-c h")  'windmove-left)
@@ -478,6 +548,13 @@
 ;;   (local-set-key (kbd "C-M-j")  'windmove-down))
 ;; (add-hook 'c-mode-hook 'my-windmove-hook)
 ;; (add-hook 'c++-mode-hook 'my-windmove-hook)
+(eval-after-load "term"
+  '(progn
+     (define-key term-raw-map (kbd "C-c h") 'windmove-left)
+     (define-key term-raw-map (kbd "C-c l") 'windmove-right)
+     (define-key term-raw-map (kbd "C-c k") 'windmove-up)
+     (define-key term-raw-map (kbd "C-c j") 'windmove-down)
+     ))
 
 ;; Make windmove work in term mode (http://stackoverflow.com/a/12509277/1857952)
 (eval-after-load "term"
@@ -538,7 +615,8 @@
  '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
  '(safe-local-variable-values
    (quote
-    ((intent-tabs-mode)
+    ((js-indent-level . 2)
+     (intent-tabs-mode)
      (c-basic-indent . 2)
      (c-basic-indent . 4)
      (c-basic-indent 4)
@@ -707,7 +785,15 @@
                                  "Python 2"
                                  "Boost"
                                  "AngularJS"
-                                 "Bootstrap 3"))
+                                 "Bootstrap 3"
+                                 "NodeJS"
+                                 "Express"
+                                 "D3JS"
+                                 "GLib"
+                                 "HTML"
+                                 "Jade"
+                                 "LaTeX"
+                                 "Less"))
 
 (defun rdeterre/dash-install (docset)
                                         ; Taken from http://jwintz.me/blog/2014/02/16/helm-dash-makes-you-efficient/
