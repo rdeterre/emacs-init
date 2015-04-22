@@ -322,6 +322,7 @@
 
 ;; Projectile
 (projectile-global-mode)
+(setq projectile-mode-line " Projectile")
 
 
 ;; Python
@@ -768,6 +769,8 @@
 (global-set-key (kbd "C-c i") 'helm-imenu)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 
+(setq enable-recursive-minibuffers t)
+
 (define-key helm-map (kbd "<tab>")
   'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i")
@@ -886,6 +889,8 @@
 
 (require 'magit)
 (global-set-key (kbd "C-x g") 'magit-status)
+(setq magit-last-seen-setup-instructions "1.4.0")
+
 
 ;; Split direction
 (setq split-height-threshold 48) ;; Do not create pane less than 24 chars high
@@ -913,11 +918,11 @@
 
 (setq split-window-preferred-function 'my-split-window-sensibly)
 
-(require 'tramp)
-(add-to-list 'tramp-default-proxies-alist
-             '(nil "\\`root\\'" "/ssh:%h:"))
-(add-to-list 'tramp-default-proxies-alist
-             '((regexp-quote (system-name)) nil nil))
+;; (require 'tramp)
+;; (add-to-list 'tramp-default-proxies-alist
+;;              '(nil "\\`root\\'" "/ssh:%h:"))
+;; (add-to-list 'tramp-default-proxies-alist
+;;              '((regexp-quote (system-name)) nil nil))
 
 ;; Winner-mode
 (when (fboundp 'winner-mode)
