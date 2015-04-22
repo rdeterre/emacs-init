@@ -493,28 +493,17 @@
 (require 'rebox2)
 (global-set-key (kbd "C-;") 'rebox-cycle)
 
-;; RTags
-(unless windows-p
-  (progn
-    (add-to-list 'load-path "~/.emacs.d/el-get/rtags/src")
-    (add-to-list 'load-path "~/.emacs.d/el-get/rtags/bin")
-    (setq rtags-path "~/.emacs.d/el-get/rtags/")
-    (require 'rtags)
-    (rtags-enable-standard-keybindings c-mode-base-map)
-    (rtags-start-process-maybe)))
-
-;; (require 'hideshow-org)
-;; (global-set-key "\C-ch" 'hs-org/minor-mode)
-
-;; (defun my-c++-hooks ()
-;;   "Enable the hooks in the preferred order: 'yas -> auto-complete -> irony'."
-;; if yas is not set before (auto-complete-mode 1), overlays may persist after
-;; an expansion.
-;; (yas/minor-mode-on)
-;; (auto-complete-mode t))
-;; (hs-org/minor-mode t))
-;; )
-                                        ;  (irony-mode t))
+;; ;; RTags
+;; (unless windows-p
+;;   (progn
+;;     (add-to-list 'load-path "~/.emacs.d/el-get/rtags/src")
+;;     (add-to-list 'load-path "~/.emacs.d/el-get/rtags/bin")
+;;     (setq rtags-path "~/.emacs.d/el-get/rtags/")
+;;     (require 'rtags)
+;;     (rtags-enable-standard-keybindings c-mode-base-map)
+;;     (rtags-start-process-maybe)
+;;     )
+;;   )
 
 (add-hook 'c-mode-common-hook 'my-c++-hooks)
 
@@ -762,21 +751,21 @@
           (lambda () (local-set-key (kbd "<C-tab>") #'clang-format-region)))
 
 ;; Helm
-(require 'helm)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-c ;") 'helm-mini)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-c i") 'helm-imenu)
-(global-set-key (kbd "C-x b") 'helm-buffers-list)
+;; (require 'helm)
+;; (global-set-key (kbd "M-x") 'helm-M-x)
+;; (global-set-key (kbd "C-c ;") 'helm-mini)
+;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
+;; (global-set-key (kbd "C-c i") 'helm-imenu)
+;; (global-set-key (kbd "C-x b") 'helm-buffers-list)
 
-(setq enable-recursive-minibuffers t)
+;; (setq enable-recursive-minibuffers t)
 
-(define-key helm-map (kbd "<tab>")
-  'helm-execute-persistent-action) ; rebind tab to run persistent action
-(define-key helm-map (kbd "C-i")
-  'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")
-  'helm-select-action)             ; list actions using C-z
+;; (define-key helm-map (kbd "<tab>")
+;;   'helm-execute-persistent-action) ; rebind tab to run persistent action
+;; (define-key helm-map (kbd "C-i")
+;;   'helm-execute-persistent-action) ; make TAB works in terminal
+;; (define-key helm-map (kbd "C-z")
+;;   'helm-select-action)             ; list actions using C-z
 
 ;; Helm-dash
 (require 'helm-dash)
