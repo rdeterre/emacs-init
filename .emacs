@@ -751,22 +751,29 @@
           (lambda () (local-set-key (kbd "<C-tab>") #'clang-format-region)))
 
 ;; Helm
-;; (require 'helm)
-;; (global-set-key (kbd "M-x") 'helm-M-x)
-;; (global-set-key (kbd "C-c ;") 'helm-mini)
-;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
-;; (global-set-key (kbd "C-c i") 'helm-imenu)
-;; (global-set-key (kbd "C-x b") 'helm-buffers-list)
+(require 'helm)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-c ;") 'helm-mini)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-c i") 'helm-imenu)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
 
-;; (setq enable-recursive-minibuffers t)
+(setq enable-recursive-minibuffers t)
 
-;; (define-key helm-map (kbd "<tab>")
-;;   'helm-execute-persistent-action) ; rebind tab to run persistent action
-;; (define-key helm-map (kbd "C-i")
-;;   'helm-execute-persistent-action) ; make TAB works in terminal
-;; (define-key helm-map (kbd "C-z")
-;;   'helm-select-action)             ; list actions using C-z
+(define-key helm-map (kbd "<tab>")
+  'helm-execute-persistent-action) ; rebind tab to run persistent action
+(define-key helm-map (kbd "C-i")
+  'helm-execute-persistent-action) ; make TAB works in terminal
+(define-key helm-map (kbd "C-z")
+  'helm-select-action)             ; list actions using C-z
 
+;; Helm window location
+;; http://www.reddit.com/r/emacs/comments/345vtl/make_helm_window_at_the_bottom_without_using_any/
+(add-to-list 'display-buffer-alist
+                    `(,(rx bos "*helm" (* not-newline) "*" eos)
+                         (display-buffer-in-side-window)
+                         (inhibit-same-window . t)
+                         (window-height . 0.4)))
 ;; Helm-dash
 (require 'helm-dash)
 (setq helm-dash-common-docsets '("C"
