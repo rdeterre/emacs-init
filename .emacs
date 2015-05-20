@@ -115,8 +115,8 @@
 	 heroku-theme
 	 magit)))
 
-(unless windows-p
-  (add-to-list 'my-packages 'rtags))
+;; (unless windows-p
+;;   (add-to-list 'my-packages 'rtags))
 
 (mapcar 'el-get-as-symbol (mapcar 'el-get-source-name el-get-sources))
 
