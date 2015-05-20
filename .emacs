@@ -100,6 +100,7 @@
 	 jedi
          js2-mode
          js-doc
+         key-chord
          moe-theme
 	 multiple-cursors
 	 org
@@ -531,6 +532,14 @@
 (global-set-key (kbd "C-c l") 'windmove-right)
 (global-set-key (kbd "C-c k")    'windmove-up)
 (global-set-key (kbd "C-c j")  'windmove-down)
+
+(require 'key-chord)
+(key-chord-mode 1)
+(key-chord-define-global ";h"  'windmove-left)
+(key-chord-define-global ";l" 'windmove-right)
+(key-chord-define-global ";k"    'windmove-up)
+(key-chord-define-global ";j"  'windmove-down)
+
 ;; (defun my-windmove-hook ()
 ;;   (local-set-key (kbd "C-M-h")  'windmove-left)
 ;;   (local-set-key (kbd "C-M-l") 'windmove-right)
