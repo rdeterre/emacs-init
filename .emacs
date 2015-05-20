@@ -535,10 +535,10 @@
 
 (require 'key-chord)
 (key-chord-mode 1)
-(key-chord-define-global ";h"  'windmove-left)
-(key-chord-define-global ";l" 'windmove-right)
-(key-chord-define-global ";k"    'windmove-up)
-(key-chord-define-global ";j"  'windmove-down)
+(key-chord-define-global "'h"  'windmove-left)
+(key-chord-define-global "'l" 'windmove-right)
+(key-chord-define-global "'k"    'windmove-up)
+(key-chord-define-global "'j"  'windmove-down)
 
 ;; (defun my-windmove-hook ()
 ;;   (local-set-key (kbd "C-M-h")  'windmove-left)
