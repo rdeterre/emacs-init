@@ -207,8 +207,8 @@
 ;; Delete selection mode
 (delete-selection-mode 1)
 
-;; electric-pair-mode
-(electric-pair-mode 1)
+;; ;; electric-pair-mode
+;; (electric-pair-mode 1)
 
 ;; git-auto-commit-mode
 (require 'git-auto-commit-mode)
@@ -273,6 +273,10 @@
 
 ;; Set Fill Column
 (setq fill-column 80)
+
+;; smartparents
+(require 'smartparens-config)
+(smartparens-global-mode t)
 
 ;;Disable things
 (menu-bar-mode -1)
