@@ -205,6 +205,16 @@
 ;; company-mode
 (add-hook 'after-init-hook 'global-company-mode)
 
+(with-eval-after-load 'company ; Redefine ccompany's shortcut. RET
+                               ; should *not* complete. I use TAB
+                               ; instead
+  (define-key company-active-map (kbd "RET") nil)
+  (define-key company-active-map [return] nil)
+  (define-key company-active-map (kbd "TAB")
+  #'company-complete-selection)
+  (define-key company-active-map [tab]
+  #'company-complete-selection))
+
 ;; Delete selection mode
 (delete-selection-mode 1)
 
