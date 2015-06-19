@@ -127,9 +127,10 @@
 
 ;; (load-theme 'heroku t)
 ;; (load-theme 'zenburn t)
-(require 'moe-theme)
-(setq moe-theme-mode-line-color 'orange)
-(moe-light)
+(load-theme 'leuven t)
+;; (require 'moe-theme)
+;; (setq moe-theme-mode-line-color 'orange)
+;; (moe-light)
 
 (server-start)
 
