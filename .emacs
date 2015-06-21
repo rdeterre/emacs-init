@@ -127,9 +127,10 @@
 
 ;; (load-theme 'heroku t)
 ;; (load-theme 'zenburn t)
-(require 'moe-theme)
-(setq moe-theme-mode-line-color 'orange)
-(moe-light)
+(load-theme 'leuven t)
+;; (require 'moe-theme)
+;; (setq moe-theme-mode-line-color 'orange)
+;; (moe-light)
 
 (server-start)
 
@@ -205,17 +206,27 @@
 ;; company-mode
 (add-hook 'after-init-hook 'global-company-mode)
 
+(with-eval-after-load 'company ; Redefine ccompany's shortcut. RET
+                               ; should *not* complete. I use TAB
+                               ; instead
+  (define-key company-active-map (kbd "RET") nil)
+  (define-key company-active-map [return] nil)
+  (define-key company-active-map (kbd "TAB")
+  #'company-complete-selection)
+  (define-key company-active-map [tab]
+  #'company-complete-selection))
+
 ;; Delete selection mode
 (delete-selection-mode 1)
 
-;; electric-pair-mode
-(electric-pair-mode 1)
+;; ;; electric-pair-mode
+;; (electric-pair-mode 1)
 
 ;; git-auto-commit-mode
 (require 'git-auto-commit-mode)
 (setq gac-automatically-push-p nil)
 
-;; ;; Hunspell
+;; Hunspell
 ;; (require 'rw-language-and-country-codes)
 ;; (require 'rw-ispell)
 ;; (require 'rw-hunspell)
@@ -285,8 +296,17 @@
 
 (setq org-image-actual-width 300)
 
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
 ;; Set Fill Column
 (setq fill-column 80)
+
+;; smartparents
+(require 'smartparens-config)
+(smartparens-global-mode t)
 
 ;;Disable things
 (menu-bar-mode -1)
@@ -301,9 +321,9 @@
 
 ;;Eproject
 
-;; Frame size
-(add-to-list 'default-frame-alist '(width . 242))
-(add-to-list 'default-frame-alist '(height . 60))
+;; ;; Frame size
+;; (add-to-list 'default-frame-alist '(width . 242))
+;; (add-to-list 'default-frame-alist '(height . 60))
 
 ;;Ido-mode
 (ido-mode t)
