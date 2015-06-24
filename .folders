@@ -1,0 +1,21 @@
+# -*- conf-unix -*-
+GMAIL{
+   %INBOX:romain.deterre/clear@imap.gmail.com:993!         "In"
+   %[Gmail]/Sent:romain.deterre/clear@imap.gmail.com:993!  "Sent"
+   %[Gmail]/Draft:romain.deterre/clear@imap.gmail.com:993! "Draft"
+   %[Gmail]/Trash:romain.deterre/clear@imap.gmail.com:993! "Trash"
+   %[Gmail]/Spam:romain.deterre/clear@imap.gmail.com:993!  "Spam"
+
+   Buy{
+      %buy/ebay:romain.deterre/clear@imap.gmail.com:993!     "E-bay"
+      %buy/records:romain.deterre/clear@imap.gmail.com:993!  "Records"
+      %buy/books:romain.deterre/clear@imap.gmail.com:993!    "Books"
+   }
+
+   Friends{
+      %friends/work:romain.deterre/clear@imap.gmail.com:993!       "work friends"
+      %friends/university:romain.deterre/clear@imap.gmail.com:993! "university friends"
+      %friends/college:romain.deterre/clear@imap.gmail.com:993!    "old friends"
+      %friends/highschool:romain.deterre/clear@imap.gmail.com:993! "very old friends"
+   }
+}
