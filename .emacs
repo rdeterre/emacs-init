@@ -648,7 +648,11 @@
  '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
  '(safe-local-variable-values
    (quote
-    ((js-indent-level . 2)
+    ((eval progn
+           (c-set-offset
+            (quote inextern-lang)
+            0))
+     (js-indent-level . 2)
      (intent-tabs-mode)
      (c-basic-indent . 2)
      (c-basic-indent . 4)
