@@ -91,6 +91,7 @@
          company-mode
 	 c-eldoc
          dash
+         diminish
          ediff-trees
 	 helm
          helm-dash
@@ -218,6 +219,13 @@
 
 ;; Delete selection mode
 (delete-selection-mode 1)
+
+;; diminish
+(require 'diminish)
+(diminish 'abbrev-mode)
+(diminish 'company-mode "cmp")
+(diminish 'projectile-mode)
+(diminish 'yas-minor-mode)
 
 ;; ;; electric-pair-mode
 ;; (electric-pair-mode 1)
