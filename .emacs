@@ -215,17 +215,17 @@
   (define-key company-active-map (kbd "TAB")
   #'company-complete-selection)
   (define-key company-active-map [tab]
-  #'company-complete-selection))
+    #'company-complete-selection))
 
 ;; Delete selection mode
 (delete-selection-mode 1)
 
 ;; diminish
 (require 'diminish)
-(diminish 'abbrev-mode)
-(diminish 'company-mode "cmp")
-(diminish 'projectile-mode)
-(diminish 'yas-minor-mode)
+(eval-after-load "abbrev" '(diminish 'abbrev-mode))
+(eval-after-load "company" '(diminish 'company-mode "cmp"))
+(eval-after-load "projectile" '(diminish 'projectile-mode))
+(eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
 
 ;; ;; electric-pair-mode
 ;; (electric-pair-mode 1)
