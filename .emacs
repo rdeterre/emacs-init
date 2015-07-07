@@ -302,7 +302,7 @@
         ("t" "Todo" entry (file+headline "~/aztdc1/notes/notes.org" "Tasks")
          "* %?\nEntered on %U\n  %i\n  %a")))
 
-(setq org-image-actual-width 300)
+(setq org-image-actual-width 500)
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
