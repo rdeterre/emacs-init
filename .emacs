@@ -277,6 +277,9 @@
               (define-key js2-mode-map "@" 'js-doc-insert-tag)))
 
 ;; org-mode
+(setq org-agenda-window-setup 'current-window)
+
+
 (add-hook 'org-mode-hook
           '(lambda ()
              (auto-fill-mode nil)
