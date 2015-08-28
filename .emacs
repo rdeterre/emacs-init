@@ -47,10 +47,12 @@
       (setenv "PYTHONPATH" "/usr/local/lib/python2.7/site-packages:")))
 
 (if windows-p
+    (progn
     (custom-set-variables
      '(magit-git-executable "c:\\program files (x86)\\Git\\bin\\git.exe")
-     '(vc-git-program "c:\\program files (x86)\\Git\\bin\\git.exe")))
-
+       '(vc-git-program "c:\\program files (x86)\\Git\\bin\\git.exe"))
+      (setq exec-path (add-to-list 'exec-path "C:/cygwin64/bin"))
+      (setenv "PATH" (concat "C:\\cygwin64\\bin;" (getenv "PATH")))))
 ;; Based on http://melpa.milkbox.net/#/getting-started .
 
 (require 'package)
