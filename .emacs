@@ -29,19 +29,13 @@
 ;;    + Openssl
 
 
-(defun system-is-mac ()
-  (interactive)
-  (string-equal system-type "darwin"))
-
+(defconst osx-p (string-equal system-type "darwin"))
 (defconst windows-p (string-equal system-type "windows-nt"))
-
-(defun system-is-linux ()
-  (interactive)
-  (string-equal system-type "gnu/linux"))
+(defconst linux-p (string-equal system-type "gnu/linux"))
 
 ;; Path issues on OS X
 
-(if (system-is-mac)
+(if osx-p
     (progn
       (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
       (setenv "PYTHONPATH" "/usr/local/lib/python2.7/site-packages:")))
@@ -139,7 +133,7 @@
 ;; (if (equal system-type 'darwin)
 ;;     (set-frame-font "Source Code Pro-12" nil t)
 ;;   (set-frame-font "Source Code Pro-9" nil t))
-(if (system-is-mac)
+(if osx-p
     (set-face-attribute 'default nil :height 120)
   (if (member "Source Code Pro" (font-family-list))
 
@@ -152,6 +146,8 @@
     (add-to-list 'default-frame-alist
 		 '(font . "Consolas 9")))
 
+(if linux-p
+    (set-face-attribute 'default nil :height 90))
 
 ;; Scrolling
 (setq mouse-wheel-progressive-speed nil)
@@ -373,7 +369,7 @@
 
 ;; Python
 (setq python-shell-interpreter
-      (if (system-is-mac)
+      (if osx-p
           (quote "/usr/local/bin/python")
         (quote "python"))
       python-shell-interpreter-args "-i")
@@ -986,7 +982,7 @@
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c-mode))
 
 ;; Keyboard for OS X
-(if (system-is-mac)
+(if osx-p
     (setq mac-command-modifier 'meta))
 
 ;; Uniquify
