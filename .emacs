@@ -297,6 +297,8 @@
    (calc . t)
    (python . t))) ; this line activates dot
 
+(add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+
 (setq org-default-notes-file (concat "~/aztdc1/notes/notes.org"))
 (define-key global-map "\C-cc" 'org-capture)
 
