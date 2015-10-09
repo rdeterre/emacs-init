@@ -28,6 +28,7 @@
 ;;    + zlib
 ;;    + Openssl
 
+;;;; initialization
 
 (defconst osx-p (string-equal system-type "darwin"))
 (defconst windows-p (string-equal system-type "windows-nt"))
@@ -101,6 +102,7 @@
          moe-theme
 	 multiple-cursors
 	 org
+         powerline
          powershell
 	 projectile
 	 smartparens
@@ -166,11 +168,21 @@
     ))
 (add-hook 'server-switch-hook 'px-raise-frame-and-give-focus)
 
-;; Ace jump
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(setq inhibit-splash-screen t)
+(setq visible-bell 1)
+(scroll-bar-mode -1)
+
+;; Prevent fractionned display
+;; http://www.masteringemacs.org/articles/2011/10/02/improving-performance-emacs-display-engine/
+(setq redisplay-dont-pause t)
+
+;;;; ace jump
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
-;; Backups
+;;;; backups
 (setq
  backup-by-copying t      ; don't clobber symlinks
  backup-directory-alist
@@ -180,7 +192,7 @@
  kept-old-versions 2
  version-control t)       ; use versioned backups
 
-;; Yasnippet
+;;;; yasnippet
 (require 'yasnippet)
 (setq yas-snippet-dirs
       '("~/.emacs.d/snippets"
@@ -201,10 +213,10 @@
                                                           'company-yasnippet-or-completion
                                                           company-active-map)))
 
-;; c-eldoc
+;;;; c-eldoc
 (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
 
-;; company-mode
+;;;; company-mode
 (add-hook 'after-init-hook 'global-company-mode)
 
 (with-eval-after-load 'company ; Redefine ccompany's shortcut. RET
@@ -220,21 +232,18 @@
 ;; Delete selection mode
 (delete-selection-mode 1)
 
-;; diminish
+;;;; diminish
 (require 'diminish)
 (eval-after-load "abbrev" '(diminish 'abbrev-mode))
 (eval-after-load "company" '(diminish 'company-mode "cmp"))
 (eval-after-load "projectile" '(diminish 'projectile-mode))
 (eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
 
-;; ;; electric-pair-mode
-;; (electric-pair-mode 1)
-
-;; git-auto-commit-mode
+;;;; git-auto-commit-mode
 (require 'git-auto-commit-mode)
 (setq gac-automatically-push-p nil)
 
-;; Hunspell
+;;;; hunspell
 ;; (require 'rw-language-and-country-codes)
 ;; (require 'rw-ispell)
 ;; (require 'rw-hunspell)
@@ -247,7 +256,7 @@
 ;;  '(rw-hunspell-use-rw-ispell t)
 ;; )
 
-;; irony-mode
+;;;; irony-mode
 (add-hook 'c++-mode-hook 'irony-mode)
 (add-hook 'c-mode-hook 'irony-mode)
 (add-hook 'objc-mode-hook 'irony-mode)
@@ -262,10 +271,10 @@
 (add-hook 'irony-mode-hook 'my-irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
-;; js2-mode
+;;;; js2-mode
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
-;; js-doc
+;;;; js-doc
 (setq js-doc-mail-address "your email address"
       js-doc-author (format "your name <%s>" js-doc-mail-address)
       js-doc-url "url of your website"
@@ -276,7 +285,7 @@
               (define-key js2-mode-map "\C-co" 'js-doc-insert-function-doc)
               (define-key js2-mode-map "@" 'js-doc-insert-tag)))
 
-;; org-mode
+;;;; org-mode
 (setq org-agenda-window-setup 'current-window)
 
 
@@ -314,47 +323,31 @@
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
-;; Set Fill Column
+;;;; fill column
 (setq fill-column 80)
 
-;; smartparents
+;;;; smartparents
 (require 'smartparens-config)
 (smartparens-global-mode t)
 
-;;Disable things
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(setq inhibit-splash-screen t)
-(setq visible-bell 1)
-(scroll-bar-mode -1)
 
-;; Prevent fractionned display
-;; http://www.masteringemacs.org/articles/2011/10/02/improving-performance-emacs-display-engine/
-(setq redisplay-dont-pause t)
-
-;;Eproject
-
-;; ;; Frame size
-;; (add-to-list 'default-frame-alist '(width . 242))
-;; (add-to-list 'default-frame-alist '(height . 60))
-
-;;Ido-mode
+;;;; ido-mode
 (ido-mode t)
 (ido-ubiquitous-mode t)
 
-;; Jedi
+;;;; jedi
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
 
-;; js2-mode
+;;;; js2-mode
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
-;; Octave
+;;;; octave
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
 
-;; ;; Powerline
-;; (powerline-default-theme)
+;;;; powerline
+(powerline-default-theme)
 
 ;; ;; (setq powerline-color1 "#586e75")
 ;; (setq powerline-color1 "#FF0000")
@@ -368,12 +361,12 @@
 ;;                     :box nil)
 
 
-;; Projectile
+;;;; projectile
 (projectile-global-mode)
 (setq projectile-mode-line " Projectile")
 
 
-;; Python
+;;;; python
 (setq python-shell-interpreter
       (if osx-p
           (quote "/usr/local/bin/python")
@@ -381,11 +374,11 @@
       python-shell-interpreter-args "-i")
 
 
-;; Outshine
-                                        ;(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
-                                        ;(add-hook 'python-mode-hook 'outline-minor-mode)
+;;;; outshine
+;(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
+;(add-hook 'python-mode-hook 'outline-minor-mode)
 
-;; Fullscreen function.
+;;;; fullscreen
 (defun djcb-full-screen-toggle ()
   "toggle full-screen mode"
   (interactive)
@@ -396,7 +389,7 @@
     (global-set-key (kbd "<f11>") 'djcb-full-screen-toggle)
   (global-set-key (kbd "<f11>") 'toggle-frame-fullscreen))
 
-;; Indentation and alignment
+;;;; indentation and alignment
 (setq c-default-style "k&r")
 (setq-default indent-tabs-mode nil)
 (setq-default c-basic-indent 2)
@@ -497,11 +490,10 @@
 
 (add-hook 'org-export-latex-after-initial-vars-hook 'my-auto-tex-parameters)
 
-;; Header-Implementation switch
+;;;; header-implementation switch
 (global-set-key  (kbd "C-c o") 'ff-find-other-file)
 
-;; Header Guards
-                                        ; Create Header Guards with f12
+;;;; header guards with F12
 (global-set-key [f12]
                 '(lambda ()
                    (interactive)
@@ -535,7 +527,7 @@
                    )
                 )
 
-;; Rebox2
+;;;; rebox2
 (setq rebox-style-loop '(13 33 111))
 (setq rebox-min-fill-column '80)
 (require 'rebox2)
@@ -557,9 +549,7 @@
 
 (set 'shift-selection-mode nil)
 
-;;
-;; Unicode: Default to UTF-8 encoding
-;;
+;;;; utf-8
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -573,13 +563,7 @@
 ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
-;; Windmove
-;; (windmove-default-keybindings 'shift)
-;; (global-set-key (kbd "C-c h")  'windmove-left)
-;; (global-set-key (kbd "C-c l") 'windmove-right)
-;; (global-set-key (kbd "C-c k")    'windmove-up)
-;; (global-set-key (kbd "C-c j")  'windmove-down)
-
+;;;; Windmove
 (require 'key-chord)
 (key-chord-mode 1)
 (key-chord-define-global "'h"  'windmove-left)
@@ -587,36 +571,7 @@
 (key-chord-define-global "'k"    'windmove-up)
 (key-chord-define-global "'j"  'windmove-down)
 
-;; (defun my-windmove-hook ()
-;;   (local-set-key (kbd "C-M-h")  'windmove-left)
-;;   (local-set-key (kbd "C-M-l") 'windmove-right)
-;;   (local-set-key (kbd "C-M-k")    'windmove-up)
-;;   (local-set-key (kbd "C-M-j")  'windmove-down))
-;; (add-hook 'c-mode-hook 'my-windmove-hook)
-;; (add-hook 'c++-mode-hook 'my-windmove-hook)
-;; (eval-after-load "term"
-;;   '(progn
-;;      (define-key term-raw-map (kbd "C-c h") 'windmove-left)
-;;      (define-key term-raw-map (kbd "C-c l") 'windmove-right)
-;;      (define-key term-raw-map (kbd "C-c k") 'windmove-up)
-;;      (define-key term-raw-map (kbd "C-c j") 'windmove-down)
-;;      ))
-
-;; Make windmove work in term mode (http://stackoverflow.com/a/12509277/1857952)
-;; (eval-after-load "term"
-;;   '(progn
-;;      (define-key term-raw-map (kbd "C-M-h") 'windmove-left)
-;;      (define-key term-raw-map (kbd "C-M-l") 'windmove-right)
-;;      (define-key term-raw-map (kbd "C-M-k") 'windmove-up)
-;;      (define-key term-raw-map (kbd "C-M-j") 'windmove-down)))
-
-;; Make windmove work in org-mode:
-(add-hook 'org-shiftup-final-hook 'windmove-up)
-(add-hook 'org-shiftleft-final-hook 'windmove-left)
-(add-hook 'org-shiftdown-final-hook 'windmove-down)
-(add-hook 'org-shiftright-final-hook 'windmove-right)
-
-;; Enum classes indentation support
+;;;; enum classes indentation support
 (defun inside-class-enum-p (pos)
   "Checks if POS is within the braces of a C++ \"enum class\"."
   (ignore-errors
@@ -643,46 +598,41 @@
 
 (add-hook 'c++-mode-hook 'fix-enum-class)
 
+;;;; compile wihth F5
 (global-set-key [f5] 'compile)
 
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(custom-safe-themes
-   (quote
-    ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "146d24de1bb61ddfa64062c29b5ff57065552a7c4019bee5d869e938782dfc2a" "96efbabfb6516f7375cdf85e7781fe7b7249b6e8114676d65337a1ffe78b78d9" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
- '(ediff-split-window-function (quote split-window-horizontally))
- '(ediff-window-setup-function (quote ediff-setup-windows-plain))
- '(minimap-recenter-type (quote free))
- '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
- '(safe-local-variable-values
-   (quote
-    ((eval progn
-           (c-set-offset
-            (quote inextern-lang)
-            0))
-     (js-indent-level . 2)
-     (intent-tabs-mode)
-     (c-basic-indent . 2)
-     (c-basic-indent . 4)
-     (c-basic-indent 4)
-     (c-basic-offset 4)))))
+;; (custom-set-variables
+;;  ;; custom-set-variables was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(column-number-mode t)
+;;  '(custom-safe-themes
+;;    (quote
+;;     ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "146d24de1bb61ddfa64062c29b5ff57065552a7c4019bee5d869e938782dfc2a" "96efbabfb6516f7375cdf85e7781fe7b7249b6e8114676d65337a1ffe78b78d9" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
+;;  '(ediff-split-window-function (quote split-window-horizontally))
+;;  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
+;;  '(minimap-recenter-type (quote free))
+;;  '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
+;;  '(safe-local-variable-values
+;;    (quote
+;;     ((eval progn
+;;            (c-set-offset
+;;             (quote inextern-lang)
+;;             0))
+;;      (js-indent-level . 2)
+;;      (intent-tabs-mode)
+;;      (c-basic-indent . 2)
+;;      (c-basic-indent . 4)
+;;      (c-basic-indent 4)
+;;      (c-basic-offset 4)))))
 
 ;; Trucate lines
 ;;(set-default 'truncate-lines nil)
 ;;(setq truncate-partial-width-windows nil)
 
+;;;; delete trailing whitespaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 ;; (require 'whitespace)
 ;; (setq whitespace-line-column 80) ;; limit line length
@@ -690,11 +640,11 @@
 
 ;; (add-hook 'prog-mode-hook 'whitespace-mode)
 
-;; Scrollers - M-n and M-p
+;;;; scrollers - M-n and M-p
 (global-set-key "\M-n" "\C-u3\C-v")
 (global-set-key "\M-p" "\C-u3\M-v")
 
-;; Mark word
+;;;; mark word
 (defun my-mark-word (N)
   (interactive "p")
   (if (and
@@ -719,7 +669,7 @@
 
 
 
-;; Multiple cursors
+;;;; multiple cursors
 (require 'multiple-cursors)
 ;; (add-hook 'prog-mode-hook 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -728,7 +678,7 @@
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 
-;; Clang-format
+;;;; clang-format
 ;;; Clang-format emacs integration for use with C/Objective-C/C++.
 
 ;; This defines a function clang-format-region that you can bind to a key.
@@ -810,7 +760,7 @@
 (add-hook 'c++-mode-hook
           (lambda () (local-set-key (kbd "<C-tab>") #'clang-format-region)))
 
-;; Helm
+;;;; helm
 (require 'helm)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-c ;") 'helm-mini)
@@ -834,7 +784,7 @@
                          (display-buffer-in-side-window)
                          (inhibit-same-window . t)
                          (window-height . 0.4)))
-;; Helm-dash
+;;;; helm-dash
 (require 'helm-dash)
 (setq helm-dash-common-docsets '("C"
                                  "C++"
@@ -875,7 +825,7 @@
 (add-hook 'python-mode-hook
           (lambda () (local-set-key (kbd "C-c c") 'helm-dash)))
 
-;; Follow compilation buffer until first error happens
+;;;; follow compilation buffer until first error happens
 (setq compilation-scroll-output 'first-error)
 
 
@@ -885,7 +835,7 @@
   (add-to-list 'imenu-generic-expression '("Sections" "^;;;; \\(.+\\)$" 1) t))
 (add-hook 'emacs-lisp-mode-hook 'imenu-elisp-sections)
 
-;; ;; Revive
+;;;; revive
 ;; (require 'revive)
 ;; (autoload 'save-current-configuration "revive" "Save status" t)
 ;; (autoload 'resume "revive" "Resume Emacs" t)
@@ -899,7 +849,7 @@
 (add-hook 'c++-mode-hook (lambda ()
                            (local-set-key "\C-cm" #'expand-member-functions)))
 
-;; Limit shell width
+;;;; limit shell width
 (defun comint-fix-window-size ()
   "Change process window size."
   (when (derived-mode-p 'comint-mode)
@@ -913,7 +863,7 @@
 
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
 
-;; term
+;;;; term
 (defface term-color-black
   '((t (:foreground "#3f3f3f" :background "#272822")))
   "Unhelpful docstring.")
@@ -946,16 +896,19 @@
       [term term-color-black term-color-red term-color-green term-color-yellow
             term-color-blue term-color-magenta term-color-cyan term-color-white])
 
+;;;; saveplace
 (require 'saveplace)
 (setq-default save-place t)
 (setq save-place-file "~/.emacs.d/saved-places")
 
+
+;;;; magit
 (require 'magit)
 (global-set-key (kbd "C-x g") 'magit-status)
 (setq magit-last-seen-setup-instructions "1.4.0")
 
 
-;; Split direction
+;;;; Split direction
 (setq split-height-threshold 48) ;; Do not create pane less than 24 chars high
 (setq split-width-threshold 160) ;; Do not create pane less than 80 chars wide
 
@@ -987,17 +940,17 @@
 ;; (add-to-list 'tramp-default-proxies-alist
 ;;              '((regexp-quote (system-name)) nil nil))
 
-;; Winner-mode
+;;;; winner-mode
 (when (fboundp 'winner-mode)
   (winner-mode 1))
 
-;; Arduino files
+;;;; arduino
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c-mode))
 
-;; Keyboard for OS X
+;;;; os-x keyboard
 (if osx-p
     (setq mac-command-modifier 'meta))
 
-;; Uniquify
+;;;; uniquify
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
