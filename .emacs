@@ -569,10 +569,10 @@
 
 ;; Windmove
 ;; (windmove-default-keybindings 'shift)
-(global-set-key (kbd "C-c h")  'windmove-left)
-(global-set-key (kbd "C-c l") 'windmove-right)
-(global-set-key (kbd "C-c k")    'windmove-up)
-(global-set-key (kbd "C-c j")  'windmove-down)
+;; (global-set-key (kbd "C-c h")  'windmove-left)
+;; (global-set-key (kbd "C-c l") 'windmove-right)
+;; (global-set-key (kbd "C-c k")    'windmove-up)
+;; (global-set-key (kbd "C-c j")  'windmove-down)
 
 (require 'key-chord)
 (key-chord-mode 1)
@@ -588,21 +588,21 @@
 ;;   (local-set-key (kbd "C-M-j")  'windmove-down))
 ;; (add-hook 'c-mode-hook 'my-windmove-hook)
 ;; (add-hook 'c++-mode-hook 'my-windmove-hook)
-(eval-after-load "term"
-  '(progn
-     (define-key term-raw-map (kbd "C-c h") 'windmove-left)
-     (define-key term-raw-map (kbd "C-c l") 'windmove-right)
-     (define-key term-raw-map (kbd "C-c k") 'windmove-up)
-     (define-key term-raw-map (kbd "C-c j") 'windmove-down)
-     ))
+;; (eval-after-load "term"
+;;   '(progn
+;;      (define-key term-raw-map (kbd "C-c h") 'windmove-left)
+;;      (define-key term-raw-map (kbd "C-c l") 'windmove-right)
+;;      (define-key term-raw-map (kbd "C-c k") 'windmove-up)
+;;      (define-key term-raw-map (kbd "C-c j") 'windmove-down)
+;;      ))
 
 ;; Make windmove work in term mode (http://stackoverflow.com/a/12509277/1857952)
-(eval-after-load "term"
-  '(progn
-     (define-key term-raw-map (kbd "C-M-h") 'windmove-left)
-     (define-key term-raw-map (kbd "C-M-l") 'windmove-right)
-     (define-key term-raw-map (kbd "C-M-k") 'windmove-up)
-     (define-key term-raw-map (kbd "C-M-j") 'windmove-down)))
+;; (eval-after-load "term"
+;;   '(progn
+;;      (define-key term-raw-map (kbd "C-M-h") 'windmove-left)
+;;      (define-key term-raw-map (kbd "C-M-l") 'windmove-right)
+;;      (define-key term-raw-map (kbd "C-M-k") 'windmove-up)
+;;      (define-key term-raw-map (kbd "C-M-j") 'windmove-down)))
 
 ;; Make windmove work in org-mode:
 (add-hook 'org-shiftup-final-hook 'windmove-up)
