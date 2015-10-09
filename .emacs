@@ -878,6 +878,13 @@
 ;; Follow compilation buffer until first error happens
 (setq compilation-scroll-output 'first-error)
 
+
+;;;; i-menu
+(defun imenu-elisp-sections ()
+  (setq imenu-prev-index-position-function nil)
+  (add-to-list 'imenu-generic-expression '("Sections" "^;;;; \\(.+\\)$" 1) t))
+(add-hook 'emacs-lisp-mode-hook 'imenu-elisp-sections)
+
 ;; ;; Revive
 ;; (require 'revive)
 ;; (autoload 'save-current-configuration "revive" "Save status" t)
