@@ -41,10 +41,12 @@
       (setenv "PYTHONPATH" "/usr/local/lib/python2.7/site-packages:")))
 
 (if windows-p
+    (progn
     (custom-set-variables
      '(magit-git-executable "c:\\program files (x86)\\Git\\bin\\git.exe")
-     '(vc-git-program "c:\\program files (x86)\\Git\\bin\\git.exe")))
-
+       '(vc-git-program "c:\\program files (x86)\\Git\\bin\\git.exe"))
+      (setq exec-path (add-to-list 'exec-path "C:/cygwin64/bin"))
+      (setenv "PATH" (concat "C:\\cygwin64\\bin;" (getenv "PATH")))))
 ;; Based on http://melpa.milkbox.net/#/getting-started .
 
 (require 'package)
@@ -292,6 +294,8 @@
  '((dot . t)
    (calc . t)
    (python . t))) ; this line activates dot
+
+(add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
 
 (setq org-default-notes-file (concat "~/aztdc1/notes/notes.org"))
 (define-key global-map "\C-cc" 'org-capture)
