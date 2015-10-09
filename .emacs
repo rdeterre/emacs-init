@@ -120,6 +120,8 @@
 
 (global-auto-revert-mode t)
 
+(global-auto-complete-mode nil)
+
 ;; (load-theme 'heroku t)
 ;; (load-theme 'zenburn t)
 (load-theme 'leuven t)
