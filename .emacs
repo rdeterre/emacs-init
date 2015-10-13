@@ -330,6 +330,8 @@
 (require 'smartparens-config)
 (smartparens-global-mode t)
 
+;;;; smerge-mode
+(setq smerge-command-prefix "\C-cm")
 
 ;;;; ido-mode
 (ido-mode t)
