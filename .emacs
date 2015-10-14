@@ -105,6 +105,7 @@
          powerline
          powershell
 	 projectile
+         pt
 	 smartparens
 	 yasnippet
          yasnippet-snippets
@@ -367,6 +368,8 @@
 (projectile-global-mode)
 (setq projectile-mode-line " Projectile")
 
+;;;; pt
+(global-set-key "\C-ct" 'pt-regexp)
 
 ;;;; python
 (setq python-shell-interpreter
