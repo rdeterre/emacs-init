@@ -550,7 +550,7 @@
 ;;     )
 ;;   )
 
-(add-hook 'c-mode-common-hook 'my-c++-hooks)
+;; (add-hook 'c-mode-common-hook 'my-c++-hooks)
 
 (set 'shift-selection-mode nil)
 
