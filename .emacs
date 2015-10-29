@@ -911,7 +911,7 @@
 (require 'magit)
 (global-set-key (kbd "C-x g") 'magit-status)
 (setq magit-last-seen-setup-instructions "1.4.0")
-
+(add-to-list 'same-window-regexps "\*magit: .*\*")
 
 ;;;; Split direction
 (setq split-height-threshold 48) ;; Do not create pane less than 24 chars high
