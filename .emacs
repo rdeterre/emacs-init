@@ -90,6 +90,7 @@
          dash
          diminish
          ediff-trees
+         expand-region
 	 helm
          helm-dash
 	 hideshow-org
@@ -239,6 +240,10 @@
 (eval-after-load "company" '(diminish 'company-mode "cmp"))
 (eval-after-load "projectile" '(diminish 'projectile-mode))
 (eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
+
+;;;; expand-region
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
 
 ;;;; git-auto-commit-mode
 (require 'git-auto-commit-mode)
